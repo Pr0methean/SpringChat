@@ -1,11 +1,13 @@
 package com.supertask.chat.domain.model;
 
-public class User {
+public class UserNew {
     Long id;
     String nick;
+    String password;
 
-    public User(Long id, String nick){
+    public UserNew(Long id, String nick, String password){
         this.id = id;
         this.nick = nick;
+        this.password = password;
     }
 }
