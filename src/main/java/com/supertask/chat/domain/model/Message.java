@@ -17,4 +17,35 @@ public class Message {
         this.content =content;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMessageOwnerId() {
+        return messageOwnerId;
+    }
+
+    public void setMessageOwnerId(Long messageOwnerId) {
+        this.messageOwnerId = messageOwnerId;
+    }
+
+    public Instant getSendDate() {
+        return sendDate;
+    }
+
+    public void setSendDate(Instant sendDate) {
+        this.sendDate = sendDate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

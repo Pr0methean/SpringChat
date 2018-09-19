@@ -20,6 +20,7 @@ public class RestLogin {
     @ResponseBody
     public String index(){
         return "index";
+
     }
 
 }
