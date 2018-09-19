@@ -7,7 +7,6 @@ public interface UserReposytory {
     public void saveUser(User user);
     public User fetchUserBy(Long id);
     public boolean userExistBy(String nick);
-
     /**
      *
      * @param nick
