@@ -2,9 +2,11 @@ package com.supertask.chat.domain.ports;
 
 import com.supertask.chat.domain.model.User;
 
+import java.sql.SQLException;
+
 public interface UserReposytory {
 
-    public void saveUser(User user);
+    public void saveUser(User user) throws SQLException;
     public User fetchUserBy(Long id);
     public boolean userExistBy(String nick);
     /**

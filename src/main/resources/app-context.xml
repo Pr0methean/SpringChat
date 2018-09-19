@@ -20,7 +20,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
           p:url="jdbc:mysql://localhost:3310/chat"
           p:driverClassName="com.mysql.jdbc.Driver"
           p:username="root"
-          p:password="root"
+          p:password="rootroot9000"
 
     />
 
