@@ -17,10 +17,10 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 
-          p:url="jdbc:mysql://51.38.133.76:3306/mydb"
+          p:url="jdbc:mysql://51.38.133.76:3306/chatdb"
           p:driverClassName="com.mysql.jdbc.Driver"
           p:username="root"
-          p:password="rootroot9000"
+          p:password="mysqlroot404"
 
     />
 

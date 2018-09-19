@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public interface UserReposytory {
 
 
-    public void saveUser(UserNew user) throws SQLException;
+    public void saveUser(UserNew user);
     public User fetchUserBy(Long id);
     public boolean userExistBy(String nick);
     /**
