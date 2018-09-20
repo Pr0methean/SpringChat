@@ -1,19 +1,23 @@
 package com.supertask.chat.domain.model;
 
 public class User {
-    private Long id;
+    private int id;
     private String nick;
 
-    public User(Long id, String nick){
+
+    public User() {
+    }
+
+    public User(int id, String nick){
         this.id = id;
         this.nick = nick;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

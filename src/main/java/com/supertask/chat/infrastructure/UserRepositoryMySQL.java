@@ -19,7 +19,6 @@ public class UserRepositoryMySQL implements UserReposytory {
     private DataSource dataSource;
 
 
-
     @Override
     public void saveUser(UserNew userNew) {
         try {
@@ -27,50 +26,49 @@ public class UserRepositoryMySQL implements UserReposytory {
             String userName = userNew.getNick();
             String userPass = userNew.getPassword();
 
-            PreparedStatement  preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (null, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users VALUES (null, ?, ?)");
 
 
-            preparedStatement.setString(1,userName);
-            preparedStatement.setString(2,userPass );
+            preparedStatement.setString(1, userName);
+            preparedStatement.setString(2, userPass);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-//    public void saveMassage() throws SQLException {
-//
+//    public void print() throws SQLException {
+//        int idq = 1;
 //        Connection connection = dataSource.getConnection();
+//        Statement statement = connection.createStatement();
+//        ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" +"\"+ nick +\"");
 //
-//        Instant data = Instant.now();
+//        while (resultSet.next()) {
+//            System.out.println("user: ");
+//            int id = resultSet.getInt("id");
+//            System.out.println("Id : " + id);
+//            String nick = resultSet.getString("nick");
+//            System.out.println("Nick : " + nick);
+//            String pass = resultSet.getString("pass");
+//            System.out.println("Pass : " + pass);
 //
-//        Date date = new Date(2000,11,10);
-//
-//        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO massages VALUES (?, ?, ?, ? )");
-//
-//        preparedStatement.setInt(1,1);
-//        preparedStatement.setString(2,"teskst testowy");
-//        preparedStatement.setDate(3, date);
-//        preparedStatement.setInt(4,1);
-//        preparedStatement.execute();
+//        }
 //    }
 
-
-
     @Override
-    public User fetchUserBy(Long id){
+    public User fetchUserBy(int id) {
         try {
-            String userName;
             Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet= statement.executeQuery("SELECT id FROM users WHERE id="+id);
-
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+            resultSet.next();
             String nick = resultSet.getString("nick");
 
-            return  new User(id,nick);
+            return new User(id, nick);
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
 
 
@@ -79,11 +77,43 @@ public class UserRepositoryMySQL implements UserReposytory {
 
     @Override
     public boolean userExistBy(String nick) {
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+//            string test = "\"testowanie\"";
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\""+nick+"\"");
+
+            if (resultSet.first()){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public User fetchUserBy(String nick, String password) {
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\""+nick+"\"" +" AND "+"pass=" + "\""+password+"\"" );
+            resultSet.next();
+            int id = resultSet.getInt("id");
+
+            return new User(id, nick);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+
         return null;
     }
+
 }

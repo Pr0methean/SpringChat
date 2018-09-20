@@ -9,7 +9,7 @@ public interface UserReposytory {
 
 
     public void saveUser(UserNew user);
-    public User fetchUserBy(Long id);
+    public User fetchUserBy(int id);
     public boolean userExistBy(String nick);
     /**
      *
