@@ -42,6 +42,11 @@ public class ChatApplication {
         boolean userExistBy2 = userRepositoryMySQL.userExistBy("Marek");
         System.out.println("UserExistby Marek: " + userExistBy2);
 
+
+        User fetchUserByNickPass = userRepositoryMySQL.fetchUserBy("Igor", "test123");
+
+        System.out.println("Nr id Igor: " + fetchUserByNickPass.getId());
+
     }
 
 }

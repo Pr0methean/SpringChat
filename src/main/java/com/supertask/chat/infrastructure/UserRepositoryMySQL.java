@@ -98,6 +98,22 @@ public class UserRepositoryMySQL implements UserReposytory {
 
     @Override
     public User fetchUserBy(String nick, String password) {
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\""+nick+"\"" +" AND "+"pass=" + "\""+password+"\"" );
+            resultSet.next();
+            int id = resultSet.getInt("id");
+
+            return new User(id, nick);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+
         return null;
     }
+
 }
