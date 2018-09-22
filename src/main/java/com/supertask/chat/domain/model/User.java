@@ -1,5 +1,8 @@
 package com.supertask.chat.domain.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private int id;
     private String nick;
@@ -27,5 +30,13 @@ public class User {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nick='" + nick + '\'' +
+                '}';
     }
 }

@@ -1,7 +1,5 @@
 package com.supertask.chat;
 
-import com.supertask.chat.domain.model.User;
-import com.supertask.chat.domain.model.UserNew;
 import com.supertask.chat.infrastructure.UserRepositoryMySQL;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
