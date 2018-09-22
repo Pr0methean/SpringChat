@@ -98,6 +98,27 @@ public class UserRepositoryMySQL implements UserReposytory {
     }
 
     @Override
+    public UserNew fetchUserNewBy(int id) throws UserNotFindException {
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+            if (resultSet.next()) {
+                String nick = resultSet.getString("nick");
+                String pass = resultSet.getString("pass");
+                return new UserNew(id,nick,pass);
+            } else {
+                throw new UserNotFindException("User not find");
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
     public boolean userExistBy(String nick) {
         try {
             Statement statement = connection.createStatement();

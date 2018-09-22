@@ -124,6 +124,43 @@ public class RestUser {
         }
     }
 
+    @ResponseBody
+    @PatchMapping("/users/{id}")
+    public UserDTO updateUser(HttpServletRequest request, HttpServletResponse response,@PathVariable("id") int userID, @RequestBody UserNew userNew) throws UserNotFindException {
+
+
+        try {
+            final UserNew userNewDB = userReposytory.fetchUserNewBy(userID);
+
+            final String receivedNick = userNew.getNick();
+            final String receivedPass = userNew.getPassword();
+
+            if(receivedNick == null){
+                userNew.setNick(userNewDB.getNick());
+            }
+            if(receivedPass == null){
+                userNew.setPassword(userNewDB.getPassword());
+            }
+
+            try {
+
+                System.out.println(userNew);
+                userNew.setId(userID);
+                userReposytory.updateUser(userNew);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.setStatus(409);
+                response.setHeader("ErrorMessage", e.getMessage());
+            }
+
+        }catch( UserNotFindException e){
+            response.setStatus(404);
+            response.setHeader("ErrorMessage", e.getMessage());
+        }
+
+        return null;
+    }
 
 }
 

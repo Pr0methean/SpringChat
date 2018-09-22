@@ -14,9 +14,9 @@ public interface UserReposytory {
      * @param user new user to add to db
      * @return id of new user
      */
-    public int saveUser(UserNew user);
-    public User fetchUserBy(int id) throws UserNotFindException;
-    public boolean userExistBy(String nick);
+    int saveUser(UserNew user);
+    User fetchUserBy(int id) throws UserNotFindException;
+    boolean userExistBy(String nick);
     /**
      *
      * @param nick
@@ -24,9 +24,10 @@ public interface UserReposytory {
      * @return User for given data: nick adn password if user exist in DB
      * @throws UserNotFindException  when user not exist
      */
-    public User fetchUserBy(String nick, String password);
-    public List<User> fetchAllUsers() throws SQLException;
-    public void deleteUserBy(int id) throws SQLException;
-    public void updateUser(UserNew userNew) throws SQLException;
+    User fetchUserBy(String nick, String password);
+    List<User> fetchAllUsers() throws SQLException;
+    void deleteUserBy(int id) throws SQLException;
+    void updateUser(UserNew userNew) throws SQLException;
+    UserNew fetchUserNewBy(int id) throws UserNotFindException;
 
 }

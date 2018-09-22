@@ -32,6 +32,7 @@ public class User {
         this.nick = nick;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
