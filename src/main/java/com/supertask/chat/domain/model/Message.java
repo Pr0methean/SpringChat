@@ -5,14 +5,15 @@ import java.time.Instant;
 public class Message {
 
     private Long id;
-    private Long messageOwnerId;
-
-    private Instant sendDate;
     private String content;
+    private Instant sendDate;
+    private Long msgReceiverID;
+    private Long msgOwnerID;
+
 
     public Message(Long id, Long messageOwnerId, Instant sendDate, String content ){
         this.id = id;
-        this.messageOwnerId = messageOwnerId;
+        this.msgReceiverID = messageOwnerId;
         this.sendDate = sendDate;
         this.content =content;
     }
@@ -26,11 +27,11 @@ public class Message {
     }
 
     public Long getMessageOwnerId() {
-        return messageOwnerId;
+        return msgReceiverID;
     }
 
     public void setMessageOwnerId(Long messageOwnerId) {
-        this.messageOwnerId = messageOwnerId;
+        this.msgReceiverID = messageOwnerId;
     }
 
     public Instant getSendDate() {
