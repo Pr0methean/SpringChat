@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RestUser {
 
-    @Autowired
+    @Autowired //- pobieranie obiektu z kontenera i zapisaniego do zmiennej
     private UserReposytory userReposytory;
 
     @ResponseBody
@@ -31,14 +31,15 @@ public class RestUser {
             List<User> users = userReposytory.fetchAllUsers();
             response.setStatus(200);
 
-            List<UserDTO> userDTOS = new ArrayList<>();
+            List<UserDTO> usersDTOS = new ArrayList<>();
 
             for (User user : users) {
                 UserDTO userDTO = new UserDTO(user);
                 userDTO.addLik(new Link("self", "/users/" + user.getId()));
-                userDTOS.add(userDTO);
+                usersDTOS.add(userDTO);
             }
-            return userDTOS;
+            return usersDTOS;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
