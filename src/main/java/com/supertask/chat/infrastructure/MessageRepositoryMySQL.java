@@ -6,8 +6,8 @@ import com.supertask.chat.domain.ports.MessageRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Instant;
 import java.util.List;
 
 @Repository
@@ -23,6 +23,22 @@ public class MessageRepositoryMySQL implements MessageRepository {
 
     @Override
     public void saveMessage(Message messageToSave) {
+        try {
+        String content = messageToSave.getContent();
+        Instant sendDate = messageToSave.getSendDate();
+        Long sender = messageToSave.getIdSender();
+        Long receiver = messageToSave.getIdReceiver();
+
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO messages values(null,?,?,?,?");
+
+            preparedStatement.setString(1,content);
+            preparedStatement.setTimestamp(2,Timestamp.from(sendDate));
+            preparedStatement.setLong(3,sender);
+            preparedStatement.setLong(4,receiver);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

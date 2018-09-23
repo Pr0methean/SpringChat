@@ -7,15 +7,15 @@ public class Message {
     private Long id;
     private String content;
     private Instant sendDate;
-    private Long msgReceiverID;
-    private Long msgOwnerID;
+    private Long idSender;
+    private Long idReceiver;
 
-
-    public Message(Long id, Long messageOwnerId, Instant sendDate, String content ){
+    public Message(Long id, String content, Instant sendDate, Long idSender, Long idReceiver) {
         this.id = id;
-        this.msgReceiverID = messageOwnerId;
+        this.content = content;
         this.sendDate = sendDate;
-        this.content =content;
+        this.idSender = idSender;
+        this.idReceiver = idReceiver;
     }
 
     public Long getId() {
@@ -26,12 +26,12 @@ public class Message {
         this.id = id;
     }
 
-    public Long getMessageOwnerId() {
-        return msgReceiverID;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessageOwnerId(Long messageOwnerId) {
-        this.msgReceiverID = messageOwnerId;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Instant getSendDate() {
@@ -42,11 +42,20 @@ public class Message {
         this.sendDate = sendDate;
     }
 
-    public String getContent() {
-        return content;
+    public Long getIdSender() {
+        return idSender;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setIdSender(Long idSender) {
+        this.idSender = idSender;
+    }
+
+    public Long getIdReceiver() {
+        return idReceiver;
+    }
+
+    public void setIdReceiver(Long idReceiver) {
+        this.idReceiver = idReceiver;
     }
 }
+

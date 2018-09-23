@@ -1,6 +1,6 @@
 package com.supertask.chat.api.rest;
 
-import com.supertask.chat.domain.model.User;
+
 import com.supertask.chat.domain.ports.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
