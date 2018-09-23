@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Chat</h1>
+    <div id="messages">
+
+    </div>
+    <input id="input" type="test" placeholder="Enter message" />
+    <button id="button">Send</button>
+</body>
+
+<script>
+
+    window.onload = () => {
+        console.log("Script run");
+
+
+        let ws = new WebSocket("ws://localhost:8080//socket");
+        let messageNode = document.querySelector("#messages");
+        let inputNode = document.querySelector("#input");
+        let buttonNode = document.querySelector("#button");
+
+        ws.onopen = function (event) {
+            ws.send("Here's some text that the server is urgently awaiting!");
+        };
+
+        ws.onmessage = function (event) {
+            console.log(event.data);
+            addMessage(event.data);
+        }
+
+        buttonNode.addEventListener("click", () => {
+
+            let message = inputNode.value;
+            addMessage(message);
+
+            ws.send(message);
+        })
+
+        let addMessage = (message) => {
+            let messageToSave = "message: " + message;
+            let pNode = document.createElement("p");
+            pNode.innerHTML = messageToSave;
+            messageNode.appendChild(pNode);
+        }
+
+    }
+
+
+
+
+</script>
+
+</html>
