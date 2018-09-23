@@ -10,6 +10,9 @@ public class Message {
     private Long idSender;
     private Long idReceiver;
 
+    public Message() {
+    }
+
     public Message(Long id, String content, Instant sendDate, Long idSender, Long idReceiver) {
         this.id = id;
         this.content = content;
@@ -17,6 +20,7 @@ public class Message {
         this.idSender = idSender;
         this.idReceiver = idReceiver;
     }
+
 
     public Long getId() {
         return id;

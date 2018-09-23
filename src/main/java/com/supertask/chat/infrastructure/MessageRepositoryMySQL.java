@@ -29,12 +29,13 @@ public class MessageRepositoryMySQL implements MessageRepository {
         Long sender = messageToSave.getIdSender();
         Long receiver = messageToSave.getIdReceiver();
 
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO messages values(null,?,?,?,?");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO messages values(null,?,?,?,?)");
 
             preparedStatement.setString(1,content);
             preparedStatement.setTimestamp(2,Timestamp.from(sendDate));
             preparedStatement.setLong(3,sender);
             preparedStatement.setLong(4,receiver);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,6 +45,8 @@ public class MessageRepositoryMySQL implements MessageRepository {
 
     @Override
     public Message fetchMessageBy(Long id) {
+
+//        Statement statement = connection.
         return null;
     }
 

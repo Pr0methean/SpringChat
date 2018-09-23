@@ -8,8 +8,7 @@ public class ServerLog {
     private String typeOfAction;
     private String contentOfAction;
 
-    public ServerLog(Long id, Instant dateOfLog, String typeOfAction, String contentOfAction) {
-        this.id = id;
+    public ServerLog(Instant dateOfLog, String typeOfAction, String contentOfAction) {
         this.dateOfLog = dateOfLog;
         this.typeOfAction = typeOfAction;
         this.contentOfAction = contentOfAction;

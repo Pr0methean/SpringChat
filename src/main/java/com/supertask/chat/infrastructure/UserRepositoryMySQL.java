@@ -32,7 +32,6 @@ public class UserRepositoryMySQL implements UserReposytory {
     public int saveUser(UserNew userNew) {
 
         try {
-            Connection connection = dataSource.getConnection();
             String userName = userNew.getNick();
             String userPass = userNew.getPassword();
 
