@@ -4,6 +4,7 @@ import com.supertask.chat.api.restUser.UserDTO;
 import com.supertask.chat.api.restUser.UserNew;
 import com.supertask.chat.domain.model.User;
 import com.supertask.chat.domain.model.dto.Link;
+import com.supertask.chat.domain.ports.LogReposytory;
 import com.supertask.chat.domain.ports.UserNotFindException;
 import com.supertask.chat.domain.ports.UserReposytory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +22,28 @@ import java.util.List;
 
 public class RestUser {
 
-    @Autowired
+    @Autowired //- pobieranie obiektu z kontenera i zapisaniego do zmiennej
     private UserReposytory userReposytory;
 
-    @ResponseBody
-    @GetMapping("/users")
+//    @Autowired
+//    private LogReposytory logReposytory;
+
+    @ResponseBody // - zwroc zawartosc metody jesli tego nie ma to zaciagnie z plików z dysku
+    @GetMapping("/users") // - tylko pobiera z bazy i przekazuje dalej - w tym wypadku liste
     public List<UserDTO> getUsers(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<User> users = userReposytory.fetchAllUsers();
             response.setStatus(200);
 
-            List<UserDTO> userDTOS = new ArrayList<>();
+            List<UserDTO> usersDTOS = new ArrayList<>();
 
             for (User user : users) {
                 UserDTO userDTO = new UserDTO(user);
                 userDTO.addLik(new Link("self", "/users/" + user.getId()));
-                userDTOS.add(userDTO);
+                usersDTOS.add(userDTO);
             }
-            return userDTOS;
+            return usersDTOS;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +54,8 @@ public class RestUser {
     }
 
     @ResponseBody
-    @PostMapping("/users")
+    @PostMapping("/users") // -- dodaje usera do bazy danych (@RequestBody UserNew userNew)
+                                    // -- otrzymujemy od frontu, zadanie zasoby
     public UserDTO newUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserNew userNew) {
 
         try {
@@ -71,13 +77,14 @@ public class RestUser {
     }
 
     @ResponseBody
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/{id}") // - get konkretnego usera  (@PathVariable("id")) -- wysylanie danych przez sciezke
+                    // -- przekaze id ktore otrzymal z URL do zmiennej -- nie znasz ID
     public UserDTO getUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID) {
 
         try {
             UserDTO userDTO = new UserDTO(userReposytory.fetchUserBy(userID));
             userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
-
+            System.out.println(request.getServletPath());
             return userDTO;
 
         } catch (UserNotFindException e) {
@@ -95,7 +102,7 @@ public class RestUser {
 
 
     @ResponseBody
-    @PutMapping("/users/{id}")
+    @PutMapping("/users/{id}") // zamiana zasobu - jesli nie wstawisz jakiejs wartosci wstawi null do bazy danych --- znasz ID
     public UserDTO repleaceUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID, @RequestBody UserNew userNew) {
         try {
             userNew.setId(userID);
