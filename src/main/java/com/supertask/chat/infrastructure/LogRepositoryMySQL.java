@@ -44,7 +44,7 @@ public class LogRepositoryMySQL implements LogReposytory {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM system_logs WHERE date_Of_Log LIKE '" + dateTime +"'%");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM system_logs WHERE date_Of_Log LIKE '" + dateTime +"%'");
 
 
             return null;

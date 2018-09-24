@@ -38,7 +38,7 @@ public class RestMessage {
 
             for (Message message : messageList) {
                 MessageDTO messageDTO = new MessageDTO(message);
-                messageDTO.addLik(new Link("self", "messages/"));
+                messageDTO.addLik(new Link("self", "/messages/" + message.getId()));
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
@@ -60,7 +60,7 @@ public class RestMessage {
         try {
             MessageDTO messageDTO = new MessageDTO(messageRepository.fetchMessageBy(idMessage));
 
-            messageDTO.addLik(new Link("self", "messages/"));
+            messageDTO.addLik(new Link("self", "/messages/" + idMessage));
             response.setStatus(201);
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTO;
@@ -108,7 +108,7 @@ public class RestMessage {
 
             for (Message message : messageList) {
                 MessageDTO messageDTO = new MessageDTO(message);
-                messageDTO.addLik(new Link("self", "messages/"));
+                messageDTO.addLik(new Link("self", "/messages/" + idUserSent));
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
@@ -137,7 +137,7 @@ public class RestMessage {
 
             for (Message message : messageList) {
                 MessageDTO messageDTO = new MessageDTO(message);
-                messageDTO.addLik(new Link("self", "messages/"));
+                messageDTO.addLik(new Link("self", "/messages/" + idUserReceive));
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
@@ -199,7 +199,7 @@ public class RestMessage {
 
             for (Message message : messageList) {
                 MessageDTO messageDTO = new MessageDTO(message);
-                messageDTO.addLik(new Link("self", "users/"));
+                messageDTO.addLik(new Link("self", "/users/" + message.getId()));
                 messageDTOList.add(messageDTO);
             }
 
