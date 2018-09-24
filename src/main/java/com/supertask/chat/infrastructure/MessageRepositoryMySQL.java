@@ -53,8 +53,8 @@ public class MessageRepositoryMySQL implements MessageRepository {
             if (resultSet.next()) {
                 String content = resultSet.getString("content");
                 Timestamp dateSQL = resultSet.getTimestamp("date_sent");
-                Long idSender = resultSet.getLong("users_id_sender");
-                Long idReceiver = resultSet.getLong("users_id_receiver");
+                Long idSender = resultSet.getLong("idSender");
+                Long idReceiver = resultSet.getLong("idReceiver");
                 return new Message(id, content, dateSQL.toInstant(), idSender, idReceiver);
             } else {
                 throw new MessagesNotFoundException("Messages not find");
@@ -109,8 +109,8 @@ public class MessageRepositoryMySQL implements MessageRepository {
                 String content = resultSet.getString("content");
                 Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
                 Instant sentData = dataMySQL.toInstant();
-                Long idSender = resultSet.getLong("users_id_sender");
-                Long idReceiver = resultSet.getLong("users_id_receiver");
+                Long idSender = resultSet.getLong("idSender");
+                Long idReceiver = resultSet.getLong("idReceiver");
 
                 listMessages.add(new Message(id, content,sentData,idSender,idReceiver));
             }
@@ -136,8 +136,8 @@ public class MessageRepositoryMySQL implements MessageRepository {
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
                 Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
-                Long idSender = resultSet.getLong("users_id_sender");
-                Long idReceiver = resultSet.getLong("users_id_receiver");
+                Long idSender = resultSet.getLong("idSender");
+                Long idReceiver = resultSet.getLong("idReceiver");
 
                 Instant sentData = dataMySQL.toInstant();
 
@@ -165,8 +165,8 @@ public class MessageRepositoryMySQL implements MessageRepository {
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
                 Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
-                Long idSender = resultSet.getLong("users_id_sender");
-                Long idReceiver = resultSet.getLong("users_id_receiver");
+                Long idSender = resultSet.getLong("idSender");
+                Long idReceiver = resultSet.getLong("idReceiver");
 
                 Instant sentData = dataMySQL.toInstant();
 
@@ -195,7 +195,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
                 String content = resultSet.getString("content");
                 Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
 //                Long idSender = resultSet.getLong("users_id_sender");
-                Long idReceiver = resultSet.getLong("users_id_receiver");
+                Long idReceiver = resultSet.getLong("idReceiver");
 
                 Instant sentData = dataMySQL.toInstant();
 
@@ -223,8 +223,8 @@ public class MessageRepositoryMySQL implements MessageRepository {
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
                 Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
-                Long idSender = resultSet.getLong("users_id_sender");
-                Long idReceiver = resultSet.getLong("users_id_receiver");
+                Long idSender = resultSet.getLong("idSender");
+                Long idReceiver = resultSet.getLong("idReceiver");
 
                 Instant sentData = dataMySQL.toInstant();
 

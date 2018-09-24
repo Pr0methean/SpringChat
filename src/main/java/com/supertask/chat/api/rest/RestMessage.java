@@ -38,7 +38,7 @@ public class RestMessage {
 
             for (Message message : messageList) {
                 MessageDTO messageDTO = new MessageDTO(message);
-                messageDTO.addLik(new Link("self", "/messages/" + message.getId()));
+                messageDTO.addLik(new Link("self", "/messages/"));
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
