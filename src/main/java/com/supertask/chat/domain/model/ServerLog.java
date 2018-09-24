@@ -16,6 +16,14 @@ public class ServerLog {
         this.status = status;
     }
 
+    public ServerLog(Long id, Instant dateOfLog, String typeOfAction, String contentOfAction, Integer status) {
+        this.id = id;
+        this.dateOfLog = dateOfLog;
+        this.typeOfAction = typeOfAction;
+        this.contentOfAction = contentOfAction;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

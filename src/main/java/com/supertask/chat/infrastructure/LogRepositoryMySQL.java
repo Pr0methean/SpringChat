@@ -1,5 +1,6 @@
 package com.supertask.chat.infrastructure;
 
+import com.supertask.chat.domain.model.Message;
 import com.supertask.chat.domain.model.ServerLog;
 import com.supertask.chat.domain.ports.LogReposytory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,7 +49,19 @@ public class LogRepositoryMySQL implements LogReposytory {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM system_logs WHERE date_Of_Log LIKE '" + dateTime +"%'");
 
+            List<ServerLog> listServerLog = new ArrayList<>();
+            while (resultSet.next()) {
 
+                Long id = resultSet.getLong("id");
+                Timestamp dataMySQL = resultSet.getTimestamp("dateOfLog");
+                String typeOfAction = resultSet.getString("typeOfAction");
+                String contentOfAction = resultSet.getString("contentOfAction");
+                Integer status = resultSet.getInt("status");
+
+                Instant dateOfLog = dataMySQL.toInstant();
+
+                listServerLog.add(new ServerLog(id,dateOfLog,typeOfAction,contentOfAction,status));
+            }
             return null;
         } catch (SQLException e) {
             e.printStackTrace();
