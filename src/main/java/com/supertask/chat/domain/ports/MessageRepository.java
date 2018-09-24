@@ -8,7 +8,7 @@ import java.util.List;
 public interface MessageRepository {
     void saveMessage(Message messageToSave);
     void deleteMessageBy(Long id);
-    void updateMessageBy(Long id);
+    void updateMessageBy(Message message);
 
     Message fetchMessageBy(Long id);
     List<Message> listMessages();
