@@ -1,4 +1,4 @@
-package com.supertask.chat.api.rest;
+package com.supertask.chat.api.restMessage;
 
 
 import com.supertask.chat.domain.model.Message;
