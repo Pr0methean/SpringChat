@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface LogReposytory {
 
-    public void saveLog(ServerLog serverLog);
-    List<ServerLog> listLogs();
+    void saveLog(ServerLog serverLog);
+    List<ServerLog> listLogsOnDay(String dateTime);
 }

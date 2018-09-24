@@ -42,7 +42,7 @@ public class RestMessage {
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
-            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 202));
 
             return messageDTOList;
         } catch (MessagesNotFoundException e) {

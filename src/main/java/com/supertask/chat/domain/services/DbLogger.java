@@ -2,7 +2,6 @@ package com.supertask.chat.domain.services;
 
 import com.supertask.chat.domain.model.ServerLog;
 import com.supertask.chat.domain.ports.LogReposytory;
-import com.supertask.chat.infrastructure.LogRepositoryMySQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -130,7 +130,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM messages WHERE content LIKE " + "'%" + phrase + "%'" );
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM messages WHERE content LIKE '%" + phrase + "%'" );
             while (resultSet.next()) {
 
                 Long id = resultSet.getLong("id");

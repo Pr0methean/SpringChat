@@ -2,11 +2,13 @@ package com.supertask.chat.api;
 
 import com.supertask.chat.api.restUser.UserDTO;
 import com.supertask.chat.api.restUser.UserNew;
+import com.supertask.chat.domain.model.ServerLog;
 import com.supertask.chat.domain.model.User;
 import com.supertask.chat.domain.model.dto.Link;
 import com.supertask.chat.domain.ports.LogReposytory;
 import com.supertask.chat.domain.ports.UserNotFindException;
 import com.supertask.chat.domain.ports.UserReposytory;
+import com.supertask.chat.domain.services.DbLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,9 @@ public class RestUser {
 
     @Autowired //- pobieranie obiektu z kontenera i zapisaniego do zmiennej
     private UserReposytory userReposytory;
+
+    @Autowired
+    private DbLogger dbLogger;
 
 //    @Autowired
 //    private LogReposytory logReposytory;
@@ -42,12 +48,14 @@ public class RestUser {
                 userDTO.addLik(new Link("self", "/users/" + user.getId()));
                 usersDTOS.add(userDTO);
             }
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return usersDTOS;
 
         } catch (UserNotFindException e) {
             e.printStackTrace();
             response.setStatus(409);
             response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),409));
         }
         return null;
     }
@@ -66,12 +74,14 @@ public class RestUser {
 
             UserDTO userDTO = new UserDTO(new User(userID, userNew.getNick()));
             userDTO.addLik(new Link("self", "/users/" + userID));
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return userDTO;
 
         } catch (UserNotFindException e) {
             e.printStackTrace();
             response.setStatus(409);
             response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),409));
         }
         return null;
     }
@@ -84,13 +94,15 @@ public class RestUser {
         try {
             UserDTO userDTO = new UserDTO(userReposytory.fetchUserBy(userID));
             userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
-            System.out.println(request.getServletPath());
+            response.setStatus(201);
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return userDTO;
 
         } catch (UserNotFindException e) {
             e.printStackTrace();
             response.setStatus(409);
             response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),409));
         }
         return null;
 
@@ -100,9 +112,15 @@ public class RestUser {
     @ResponseBody
     @PutMapping("/users/{id}") // zamiana zasobu - jesli nie wstawisz jakiejs wartosci wstawi null do bazy danych --- znasz ID
     public UserDTO repleaceUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID, @RequestBody UserNew userNew) {
-        userNew.setId(userID);
-        userReposytory.updateUser(userNew);
-        response.setStatus(200);
+        try {
+            userNew.setId(userID);
+            userReposytory.updateUser(userNew);
+            response.setStatus(200);
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),200));
+        } catch (Exception e) {
+            e.printStackTrace();
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),409));
+        }
 
         return null;
     }
@@ -114,10 +132,11 @@ public class RestUser {
             System.out.printf("id " + userID);
             userReposytory.deleteUserBy(userID);
             response.setStatus(200);
-
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),200));
         } catch (Exception e) {
             response.setStatus(404);
             response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),404));
         }
     }
 
@@ -142,10 +161,12 @@ public class RestUser {
             System.out.println(userNew);
             userNew.setId(userID);
             userReposytory.updateUser(userNew);
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
 
         }catch( UserNotFindException e){
             response.setStatus(404);
             response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),404));
         }
 
         return null;
