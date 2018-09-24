@@ -13,8 +13,15 @@ public interface MessageRepository {
     Message fetchMessageBy(Long id);
     List<Message> listMessages();
     List<Message> listMessagesContainPhrase(String phrase);
-    List<Message> listMessagesInDate(Integer sendDate);
-    List<Message> listMessagesSent(Long idUser);
+
+    /**
+     *
+     * @param YYYY-MM-DD HH:MM:SS
+     * @excample '2018-09-23 20:
+     * @return
+     */
+    List<Message> listMessagesInDate(String dateTime);
+    List<Message> listMessagesSender(Long idUser);
     List<Message> listMessagesReceived(Long idUser);
     List<Message> listMessagesBy(Long idSender, Long idReceiver, int startBound, int toBound);
 }

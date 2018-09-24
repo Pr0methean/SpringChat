@@ -6,17 +6,17 @@ public class Message {
 
     private Long id;
     private String content;
-    private Instant sendDate;
+    private Instant sentDate;
     private Long idSender;
     private Long idReceiver;
 
     public Message() {
     }
 
-    public Message(Long id, String content, Instant sendDate, Long idSender, Long idReceiver) {
+    public Message(Long id, String content, Instant sentDate, Long idSender, Long idReceiver) {
         this.id = id;
         this.content = content;
-        this.sendDate = sendDate;
+        this.sentDate = sentDate;
         this.idSender = idSender;
         this.idReceiver = idReceiver;
     }
@@ -38,12 +38,12 @@ public class Message {
         this.content = content;
     }
 
-    public Instant getSendDate() {
-        return sendDate;
+    public Instant getSentDate() {
+        return sentDate;
     }
 
-    public void setSendDate(Instant sendDate) {
-        this.sendDate = sendDate;
+    public void setSentDate(Instant sentDate) {
+        this.sentDate = sentDate;
     }
 
     public Long getIdSender() {

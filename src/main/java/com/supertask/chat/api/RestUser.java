@@ -44,8 +44,7 @@ public class RestUser {
             }
             return usersDTOS;
 
-
-        } catch (SQLException e) {
+        } catch (UserNotFindException e) {
             e.printStackTrace();
             response.setStatus(409);
             response.setHeader("ErrorMessage", e.getMessage());
@@ -69,7 +68,8 @@ public class RestUser {
             userDTO.addLik(new Link("self", "/users/" + userID));
             return userDTO;
 
-        } catch (Exception e) {
+        } catch (UserNotFindException e) {
+            e.printStackTrace();
             response.setStatus(409);
             response.setHeader("ErrorMessage", e.getMessage());
         }
@@ -89,10 +89,6 @@ public class RestUser {
 
         } catch (UserNotFindException e) {
             e.printStackTrace();
-            response.setStatus(404);
-            response.setHeader("ErrorMessage", e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
             response.setStatus(409);
             response.setHeader("ErrorMessage", e.getMessage());
         }
@@ -104,16 +100,10 @@ public class RestUser {
     @ResponseBody
     @PutMapping("/users/{id}") // zamiana zasobu - jesli nie wstawisz jakiejs wartosci wstawi null do bazy danych --- znasz ID
     public UserDTO repleaceUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID, @RequestBody UserNew userNew) {
-        try {
-            userNew.setId(userID);
-            userReposytory.updateUser(userNew);
-            response.setStatus(200);
+        userNew.setId(userID);
+        userReposytory.updateUser(userNew);
+        response.setStatus(200);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.setStatus(409);
-            response.setHeader("ErrorMessage", e.getMessage());
-        }
         return null;
     }
 
@@ -149,17 +139,9 @@ public class RestUser {
                 userNew.setPassword(userNewDB.getPassword());
             }
 
-            try {
-
-                System.out.println(userNew);
-                userNew.setId(userID);
-                userReposytory.updateUser(userNew);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.setStatus(409);
-                response.setHeader("ErrorMessage", e.getMessage());
-            }
+            System.out.println(userNew);
+            userNew.setId(userID);
+            userReposytory.updateUser(userNew);
 
         }catch( UserNotFindException e){
             response.setStatus(404);
