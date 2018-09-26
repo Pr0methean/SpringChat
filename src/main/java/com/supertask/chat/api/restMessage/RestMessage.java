@@ -41,6 +41,8 @@ public class RestMessage {
                 messageDTO.addLik(new Link("self", "/messages/"));
                 messageDTOList.add(messageDTO);
             }
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             response.setStatus(201);
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 202));
 
@@ -61,8 +63,12 @@ public class RestMessage {
             MessageDTO messageDTO = new MessageDTO(messageRepository.fetchMessageBy(idMessage));
 
             messageDTO.addLik(new Link("self", "/messages/" + idMessage));
-            response.setStatus(201);
+
+
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
+            response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             return messageDTO;
         } catch (MessagesNotFoundException e) {
             e.printStackTrace();
@@ -112,6 +118,9 @@ public class RestMessage {
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
+
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTOList;
         } catch (MessagesNotFoundException e) {
@@ -141,6 +150,9 @@ public class RestMessage {
                 messageDTOList.add(messageDTO);
             }
             response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
+
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTOList;
         } catch (MessagesNotFoundException e) {
@@ -157,10 +169,14 @@ public class RestMessage {
     public void postMassageFromTo(HttpServletRequest request, HttpServletResponse response, @RequestBody Message message) {
         try {
             message.setSentDate(Instant.now());
+
+            messageRepository.saveMessage(message);
+
             response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
-            messageRepository.saveMessage(message);
         } catch (MessagesNotFoundException e) {
             e.printStackTrace();
             response.setStatus(409);
@@ -173,9 +189,10 @@ public class RestMessage {
     public void deleteMassage(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long idMessage) {
         try {
             messageRepository.deleteMessageBy(idMessage);
-            response.setStatus(201);
-
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
+            response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
         } catch (MessagesNotFoundException e) {
             e.printStackTrace();
             response.setStatus(409);
@@ -204,6 +221,8 @@ public class RestMessage {
             }
 
             response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTOList;
         } catch (MessagesNotFoundException e) {

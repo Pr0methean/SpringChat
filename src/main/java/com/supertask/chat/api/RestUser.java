@@ -39,7 +39,6 @@ public class RestUser {
     public List<UserDTO> getUsers(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<User> users = userReposytory.fetchAllUsers();
-            response.setStatus(200);
 
             List<UserDTO> usersDTOS = new ArrayList<>();
 
@@ -48,6 +47,10 @@ public class RestUser {
                 userDTO.addLik(new Link("self", "/users/" + user.getId()));
                 usersDTOS.add(userDTO);
             }
+
+            response.setStatus(200);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return usersDTOS;
 
@@ -69,11 +72,13 @@ public class RestUser {
 
             int userID = userReposytory.saveUser(userNew);
             System.out.println(" Add new user to db " + userNew.toString());
-            response.setStatus(201);
-
 
             UserDTO userDTO = new UserDTO(new User(userID, userNew.getNick()));
             userDTO.addLik(new Link("self", "/users/" + userID));
+
+            response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return userDTO;
 
@@ -95,6 +100,8 @@ public class RestUser {
             UserDTO userDTO = new UserDTO(userReposytory.fetchUserBy(userID));
             userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
             response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return userDTO;
 
@@ -116,6 +123,8 @@ public class RestUser {
             userNew.setId(userID);
             userReposytory.updateUser(userNew);
             response.setStatus(200);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),200));
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,6 +141,8 @@ public class RestUser {
             System.out.printf("id " + userID);
             userReposytory.deleteUserBy(userID);
             response.setStatus(200);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),200));
         } catch (Exception e) {
             response.setStatus(404);
@@ -150,7 +161,6 @@ public class RestUser {
 
             final String receivedNick = userNew.getNick();
             final String receivedPass = userNew.getPassword();
-
             if(receivedNick == null){
                 userNew.setNick(userNewDB.getNick());
             }
@@ -163,6 +173,9 @@ public class RestUser {
             userReposytory.updateUser(userNew);
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
 
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
+            response.setStatus(201);
         }catch( UserNotFindException e){
             response.setStatus(404);
             response.setHeader("ErrorMessage", e.getMessage());
