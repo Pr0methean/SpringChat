@@ -52,7 +52,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM messages WHERE id=" + id);
             if (resultSet.next()) {
                 String content = resultSet.getString("content");
-                Timestamp dateSQL = resultSet.getTimestamp("date_sent");
+                Timestamp dateSQL = resultSet.getTimestamp("dateSent");
                 Long idSender = resultSet.getLong("idSender");
                 Long idReceiver = resultSet.getLong("idReceiver");
                 return new Message(id, content, dateSQL.toInstant(), idSender, idReceiver);
@@ -107,7 +107,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
 
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
-                Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
+                Timestamp dataMySQL = resultSet.getTimestamp("dateSent");
                 Instant sentData = dataMySQL.toInstant();
                 Long idSender = resultSet.getLong("idSender");
                 Long idReceiver = resultSet.getLong("idReceiver");
@@ -135,7 +135,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
 
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
-                Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
+                Timestamp dataMySQL = resultSet.getTimestamp("dateSent");
                 Long idSender = resultSet.getLong("idSender");
                 Long idReceiver = resultSet.getLong("idReceiver");
 
@@ -159,12 +159,12 @@ public class MessageRepositoryMySQL implements MessageRepository {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM messages WHERE date_sent LIKE" +"'" + dateTime + "%'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM messages WHERE dateSent LIKE" +"'" + dateTime + "%'");
             while (resultSet.next()) {
 
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
-                Timestamp dataMySQL = resultSet.getTimestamp("date_sent");
+                Timestamp dataMySQL = resultSet.getTimestamp("dateSent");
                 Long idSender = resultSet.getLong("idSender");
                 Long idReceiver = resultSet.getLong("idReceiver");
 

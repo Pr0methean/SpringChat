@@ -26,6 +26,7 @@ public class RestMessage {
     private DbLogger dbLogger;
 
     @ResponseBody
+    @CrossOrigin
     @GetMapping("/messages")
     public List<MessageDTO> getMessages(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -42,7 +43,7 @@ public class RestMessage {
                 messageDTOList.add(messageDTO);
             }
             response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
+            response.setHeader("Content-type", "application/json");
             response.setStatus(201);
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 202));
 
@@ -57,6 +58,7 @@ public class RestMessage {
     }
 
     @ResponseBody
+    @CrossOrigin
     @GetMapping("/messages/{id}")
     public MessageDTO getMessageById(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long idMessage) {
         try {
@@ -68,7 +70,7 @@ public class RestMessage {
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             response.setStatus(201);
             response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
+            response.setHeader("Content-type", "application/json");
             return messageDTO;
         } catch (MessagesNotFoundException e) {
             e.printStackTrace();
@@ -79,29 +81,70 @@ public class RestMessage {
         return null;
     }
 
-//    @ResponseBody
-//    @GetMapping("/messages/{phrase}")
-//    public List<MessageDTO> getMessageContain(HttpServletRequest request, HttpServletResponse response, @PathVariable("phrase") String phrase) {
-//        List<MessageDTO> messageDTOList = new ArrayList<>();
-//
-//
-//
-//
-//
-//
-//        messageRepository.listMessagesContainPhrase(null);
-//        return messageDTOList;
-//    }
-//
-//    @ResponseBody
-//    @GetMapping("/messages/{date}")
-//    public List<MessageDTO> getMessageContain(HttpServletRequest request, HttpServletResponse response, @PathVariable("date") String dateTime) {
-//        messageRepository.listMessagesInDate(dateTime);
-//
-//        return null;
-//    }
+    @ResponseBody
+    @CrossOrigin
+    @GetMapping("/messages/phrase/{phrase}")
+    public List<MessageDTO> getMessageContainPhrase(HttpServletRequest request, HttpServletResponse response, @PathVariable("phrase") String phrase) {
+        try {
+            List<MessageDTO> messageDTOList = new ArrayList<>();
+            List<Message> listMessage = new ArrayList<>();
+
+            listMessage.addAll(messageRepository.listMessagesContainPhrase(phrase));
+
+            for (Message message : listMessage) {
+
+                MessageDTO messageDTO = new MessageDTO(message);
+                messageDTO.addLik(new Link("self", "/messages/" + message.getId()));
+
+                messageDTOList.add(messageDTO);
+            }
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
+            response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type", "application/json");
+            return messageDTOList;
+        } catch (MessagesNotFoundException e) {
+            e.printStackTrace();
+            response.setStatus(409);
+            response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
+        }
+        return null;
+    }
 
     @ResponseBody
+    @CrossOrigin
+    @GetMapping("/messages/time/{dateTime}")
+    public List<MessageDTO> getMessageContainDate(HttpServletRequest request, HttpServletResponse response, @PathVariable("dateTime") String dateTime) {
+        try {
+            if (dateTime.contains("T")){
+                dateTime = dateTime.replace("T"," ");
+            }
+            List<MessageDTO> listMessageDTO = new ArrayList<>();
+            List<Message> listMessage = new ArrayList<>();
+            listMessage.addAll(messageRepository.listMessagesInDate(dateTime));
+
+            for (Message message : listMessage) {
+                MessageDTO messageDTO = new MessageDTO(message);
+                messageDTO.addLik(new Link("self", "/messages/" + message.getId()));
+                listMessageDTO.add(messageDTO);
+            }
+            response.setStatus(201);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type", "application/json");
+
+            return listMessageDTO;
+        } catch (MessagesNotFoundException e) {
+            e.printStackTrace();
+            response.setStatus(409);
+            response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
+        }
+        return null;
+    }
+
+    @ResponseBody
+    @CrossOrigin
     @GetMapping("/messages/sender/{idUserSent}")
     public List<MessageDTO> getMessageSent(HttpServletRequest request, HttpServletResponse response, @PathVariable("idUserSent") Long idUserSent) {
         try {
@@ -119,7 +162,7 @@ public class RestMessage {
             }
             response.setStatus(201);
             response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
+            response.setHeader("Content-type", "application/json");
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTOList;
@@ -134,6 +177,7 @@ public class RestMessage {
 
 
     @ResponseBody
+    @CrossOrigin
     @GetMapping("/messages/receiver/{idUserReceive}")
     public List<MessageDTO> getMessageReceived(HttpServletRequest request, HttpServletResponse response, @PathVariable("idUserReceive") Long idUserReceive) {
         try {
@@ -151,7 +195,7 @@ public class RestMessage {
             }
             response.setStatus(201);
             response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
+            response.setHeader("Content-type", "application/json");
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTOList;
@@ -165,16 +209,17 @@ public class RestMessage {
     }
 
     @ResponseBody
+    @CrossOrigin
     @PostMapping("/messages")
     public void postMassageFromTo(HttpServletRequest request, HttpServletResponse response, @RequestBody Message message) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Content-type", "application/json");
         try {
             message.setSentDate(Instant.now());
 
             messageRepository.saveMessage(message);
 
             response.setStatus(201);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
         } catch (MessagesNotFoundException e) {
@@ -185,14 +230,15 @@ public class RestMessage {
     }
 
     @ResponseBody
+    @CrossOrigin
     @DeleteMapping("/messages/{id}")
     public void deleteMassage(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long idMessage) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Content-type", "application/json");
         try {
             messageRepository.deleteMessageBy(idMessage);
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             response.setStatus(201);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
         } catch (MessagesNotFoundException e) {
             e.printStackTrace();
             response.setStatus(409);
@@ -202,10 +248,13 @@ public class RestMessage {
     }
 
     @ResponseBody
+    @CrossOrigin
     @GetMapping("/messages/by/{idSender},{idReceiver}/{startBound},{toBound}")
     public List<MessageDTO> listMessagesBy(HttpServletRequest request, HttpServletResponse response,
                                            @PathVariable("idSender") Long idSender, @PathVariable("idReceiver") Long idReceiver,
                                            @PathVariable("startBound") int startBound, @PathVariable("toBound") int toBound) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Content-type", "application/json");
         try {
             List<MessageDTO> messageDTOList = new ArrayList<>();
 
@@ -221,8 +270,6 @@ public class RestMessage {
             }
 
             response.setStatus(201);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return messageDTOList;
         } catch (MessagesNotFoundException e) {

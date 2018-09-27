@@ -7,5 +7,5 @@ import java.util.List;
 public interface LogReposytory {
 
     void saveLog(ServerLog serverLog);
-    List<ServerLog> listLogsOnDay(String dateTime);
+    List<ServerLog> listLogsOnDate(String dateTime);
 }

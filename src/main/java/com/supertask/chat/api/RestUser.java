@@ -37,6 +37,8 @@ public class RestUser {
     @ResponseBody // - zwroc zawartosc metody jesli tego nie ma to zaciagnie z plików z dysku
     @GetMapping("/users") // - tylko pobiera z bazy i przekazuje dalej - w tym wypadku liste
     public List<UserDTO> getUsers(HttpServletRequest request, HttpServletResponse response) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
         try {
             List<User> users = userReposytory.fetchAllUsers();
 
@@ -49,8 +51,6 @@ public class RestUser {
             }
 
             response.setStatus(200);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return usersDTOS;
 
@@ -64,9 +64,12 @@ public class RestUser {
     }
 
     @ResponseBody
+    @CrossOrigin
     @PostMapping("/users") // -- dodaje usera do bazy danych (@RequestBody UserNew userNew)
                                     // -- otrzymujemy od frontu, zadanie zasoby
     public UserDTO newUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserNew userNew) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
 
         try {
 
@@ -77,8 +80,6 @@ public class RestUser {
             userDTO.addLik(new Link("self", "/users/" + userID));
 
             response.setStatus(201);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return userDTO;
 
@@ -92,16 +93,17 @@ public class RestUser {
     }
 
     @ResponseBody
+    @CrossOrigin
     @GetMapping("/users/{id}") // - get konkretnego usera  (@PathVariable("id")) -- wysylanie danych przez sciezke
                     // -- przekaze id ktore otrzymal z URL do zmiennej -- nie znasz ID
     public UserDTO getUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID) {
 
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
         try {
             UserDTO userDTO = new UserDTO(userReposytory.fetchUserBy(userID));
             userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
             response.setStatus(201);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return userDTO;
 
@@ -117,14 +119,15 @@ public class RestUser {
 
 
     @ResponseBody
+    @CrossOrigin
     @PutMapping("/users/{id}") // zamiana zasobu - jesli nie wstawisz jakiejs wartosci wstawi null do bazy danych --- znasz ID
     public UserDTO repleaceUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID, @RequestBody UserNew userNew) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
         try {
             userNew.setId(userID);
             userReposytory.updateUser(userNew);
             response.setStatus(200);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),200));
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,14 +138,15 @@ public class RestUser {
     }
 
     @ResponseBody
+    @CrossOrigin
     @DeleteMapping("/users/{id}")
     public void deleteUser(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int userID) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
         try {
             System.out.printf("id " + userID);
             userReposytory.deleteUserBy(userID);
             response.setStatus(200);
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),200));
         } catch (Exception e) {
             response.setStatus(404);
@@ -152,8 +156,11 @@ public class RestUser {
     }
 
     @ResponseBody
+    @CrossOrigin
     @PatchMapping("/users/{id}")
     public UserDTO updateUser(HttpServletRequest request, HttpServletResponse response,@PathVariable("id") int userID, @RequestBody UserNew userNew) throws UserNotFindException {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Content-type","application/json");
 
 
         try {
@@ -173,8 +180,6 @@ public class RestUser {
             userReposytory.updateUser(userNew);
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
 
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Content-type","application/json");
             response.setStatus(201);
         }catch( UserNotFindException e){
             response.setStatus(404);

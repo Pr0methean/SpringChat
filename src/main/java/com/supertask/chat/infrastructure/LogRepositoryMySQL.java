@@ -43,11 +43,11 @@ public class LogRepositoryMySQL implements LogReposytory {
     }
 
     @Override
-    public List<ServerLog> listLogsOnDay(String dateTime) {
+    public List<ServerLog> listLogsOnDate(String dateTime) {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM system_logs WHERE date_Of_Log LIKE '" + dateTime +"%'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM system_logs WHERE dateOfLog LIKE '" + dateTime +"%'");
 
             List<ServerLog> listServerLog = new ArrayList<>();
             while (resultSet.next()) {
@@ -62,7 +62,7 @@ public class LogRepositoryMySQL implements LogReposytory {
 
                 listServerLog.add(new ServerLog(id,dateOfLog,typeOfAction,contentOfAction,status));
             }
-            return null;
+            return listServerLog;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error adding message");
