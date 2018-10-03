@@ -30,6 +30,7 @@ public class ChatApplication {
         ApplicationContext context = app;
 
         System.out.println("TESTOWY COMMIT");
+        System.out.println("TESTOWY COMMIT2");
 //
 //        UserNew userNew1 = new UserNew("jarek", "test123");
 //        UserNew userNew2 = new UserNew("tomek", "test123");
