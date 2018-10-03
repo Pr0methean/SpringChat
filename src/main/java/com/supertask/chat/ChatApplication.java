@@ -28,6 +28,8 @@ public class ChatApplication {
 
 
         ApplicationContext context = app;
+
+        System.out.println("TESTOWY COMMIT");
 //
 //        UserNew userNew1 = new UserNew("jarek", "test123");
 //        UserNew userNew2 = new UserNew("tomek", "test123");
@@ -43,19 +45,19 @@ public class ChatApplication {
 //            System.out.println(message.getContent());
 //
 //        }
-
-        LogReposytory logReposytory = context.getBean(LogRepositoryMySQL.class);
-
-        List<ServerLog> serverLogList = new ArrayList<>();
-
-        serverLogList.addAll(logReposytory.listLogsOnDate("2018"));
-
-        System.out.println(serverLogList.get(1).getStatus());
-
-
-
-
-        UserRepositoryMySQL userRepositoryMySQL = context.getBean(UserRepositoryMySQL.class);
+//
+//        LogReposytory logReposytory = context.getBean(LogRepositoryMySQL.class);
+//
+//        List<ServerLog> serverLogList = new ArrayList<>();
+//
+//        serverLogList.addAll(logReposytory.listLogsOnDate("2018"));
+//
+//        System.out.println(serverLogList.get(1).getStatus());
+//
+//
+//
+//
+//        UserRepositoryMySQL userRepositoryMySQL = context.getBean(UserRepositoryMySQL.class);
 //        userRepositoryMySQL.saveUser(userNew1);
 //        userRepositoryMySQL.saveUser(userNew2);
 
