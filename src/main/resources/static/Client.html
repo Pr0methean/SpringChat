@@ -10,46 +10,69 @@
 
 <body>
     <h1>Chat</h1>
+    <input id="nick" type="text" placeholder="Enter your nick" /><button id="joinButton">Join</button>
+    <br />
     <div id="messages">
 
     </div>
-    <input id="input" type="test" placeholder="Enter message" />
-    <button id="button">Send</button>
+    <input style="display: none" id="input" type="test" placeholder="Enter message" />
+    <button style="display: none" id="button">Send</button>
 </body>
 
 <script>
 
     window.onload = () => {
-        console.log("Script run");
-        let host = window.location.host
 
-        let ws = new WebSocket("ws://"+host+"//socket");
-        let messageNode = document.querySelector("#messages");
-        let inputNode = document.querySelector("#input");
-        let buttonNode = document.querySelector("#button");
+        let nickNode = document.querySelector("#nick");
+        let joinButtonNode = document.querySelector("#joinButton");
+        joinButtonNode.addEventListener("click", () => {
+            joinButtonNode.style.display = "none"
+            nickNode.style.display = "none";
 
-        ws.onopen = function (event) {
-            ws.send("Here's some text that the server is urgently awaiting!");
-        };
+            console.log(joinButtonNode.style.dispaly)
 
-        ws.onmessage = function (event) {
-            console.log(event.data);
-            addMessage(event.data);
-        }
-
-        buttonNode.addEventListener("click", () => {
-
-            let message = inputNode.value;
-            addMessage(message);
-
-            ws.send(message);
+            connect();
         })
 
-        let addMessage = (message) => {
-            let messageToSave = "message: " + message;
-            let pNode = document.createElement("p");
-            pNode.innerHTML = messageToSave;
-            messageNode.appendChild(pNode);
+
+        let connect = () => {
+
+            let nickNode = document.querySelector("#nick");
+            let messageNode = document.querySelector("#messages");
+            let inputNode = document.querySelector("#input");
+            let buttonNode = document.querySelector("#button");
+
+            messageNode.style.display = "block";
+            inputNode.style.display = "inline-block";
+            buttonNode.style.display = "inline-block";
+
+            let host = window.location.host
+            let ws = new WebSocket("ws://" + host + "//socket");
+
+            ws.onopen = function (event) {
+                let nick = nickNode.value;
+
+                ws.send(nick + " join to chat");
+            };
+
+            ws.onmessage = function (event) {
+                console.log(event.data);
+                addMessage(event.data);
+            }
+
+            buttonNode.addEventListener("click", () => {
+                let nick = nickNode.value;
+                let message = inputNode.value;
+                inputNode.value = "";
+                ws.send(nick + ": " + message);
+            })
+
+            let addMessage = (message) => {
+                let pNode = document.createElement("p");
+                pNode.innerHTML = message;
+                messageNode.appendChild(pNode);
+            }
+
         }
 
     }
