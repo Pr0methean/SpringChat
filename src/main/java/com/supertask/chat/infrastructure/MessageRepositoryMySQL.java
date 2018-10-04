@@ -4,6 +4,7 @@ import com.supertask.chat.domain.model.Message;
 import com.supertask.chat.domain.ports.MessageRepository;
 import com.supertask.chat.domain.ports.MessagesNotFoundException;
 import com.supertask.chat.domain.ports.UserNotFindException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -16,16 +17,15 @@ import java.util.List;
 public class MessageRepositoryMySQL implements MessageRepository {
 
     private DataSource dataSource;
-    private Connection connection;
 
+    @Autowired
     public MessageRepositoryMySQL(DataSource dataSource) throws SQLException {
         this.dataSource = dataSource;
-        this.connection = dataSource.getConnection();
     }
 
     @Override
     public void saveMessage(Message messageToSave) {
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             String content = messageToSave.getContent();
             Instant sendDate = messageToSave.getSentDate();
             Long sender = messageToSave.getIdSender();
@@ -46,7 +46,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public Message fetchMessageBy(Long id) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM messages WHERE id=" + id);
@@ -70,7 +70,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public void deleteMessageBy(Long id) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("DELETE FROM messages WHERE id=\"" + id + "\"");
 
@@ -84,7 +84,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public void updateMessageBy(Message message) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             Timestamp dateInSQL = Timestamp.from(message.getSentDate());
             statement.execute("UPDATE messages SET content=\"" + message.getContent() + "\", date_sent=\"" + dateInSQL + "\", users_id_sender=\"" + message.getIdSender() + "\", users_id_receiver=\"" + message.getIdReceiver() + "\" WHERE id=\"" + message.getId() + "\"");
@@ -98,7 +98,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public List<Message> listMessages() {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
@@ -126,7 +126,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public List<Message> listMessagesContainPhrase(String phrase) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
@@ -155,7 +155,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public List<Message> listMessagesInDate(String dateTime) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
@@ -184,7 +184,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public List<Message> listMessagesSender(Long idSender) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
@@ -213,7 +213,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public List<Message> listMessagesReceived(Long idReceived) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 
@@ -242,7 +242,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
     @Override
     public List<Message> listMessagesBy(Long idSender, Long idReceiver, int startBound, int toBound) {
         //todo : should write test
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
             List<Message> listMessages = new ArrayList<>();
 

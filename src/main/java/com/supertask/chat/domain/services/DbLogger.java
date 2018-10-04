@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DbLogger {
 
-    @Autowired
     private LogReposytory logReposytory;
+
+    @Autowired
+    public DbLogger(LogReposytory logReposytory) {
+        this.logReposytory = logReposytory;
+    }
 
     public void log(ServerLog serverLog){
 

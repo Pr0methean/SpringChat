@@ -14,23 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-
 public class UserRepositoryMySQL implements UserReposytory {
 
 
     private DataSource dataSource;
-    private Connection connection;
 
     @Autowired
-    public UserRepositoryMySQL(DataSource dataSource) throws SQLException {
+    public UserRepositoryMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.connection = dataSource.getConnection();
     }
 
     @Override
     public int saveUser(UserNew userNew) {
 
-        try {
+        try (Connection connection = this.dataSource.getConnection()) {
             String userName = userNew.getNick();
             String userPass = userNew.getPassword();
 
@@ -59,7 +56,8 @@ public class UserRepositoryMySQL implements UserReposytory {
 
     @Override
     public User fetchUserBy(int id) throws UserNotFindException {
-        try {
+
+        try (Connection connection = this.dataSource.getConnection()) {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
@@ -78,8 +76,9 @@ public class UserRepositoryMySQL implements UserReposytory {
     }
 
     @Override
-    public UserNew fetchUserNewBy(int id){
-        try {
+    public UserNew fetchUserNewBy(int id) {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
@@ -100,7 +99,8 @@ public class UserRepositoryMySQL implements UserReposytory {
 
     @Override
     public boolean userExistBy(String nick) {
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\"" + nick + "\"");
 
@@ -119,7 +119,8 @@ public class UserRepositoryMySQL implements UserReposytory {
 
     @Override
     public User fetchUserBy(String nick, String password) {
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\"" + nick + "\"" + " AND " + "pass=" + "\"" + password + "\"");
@@ -137,9 +138,9 @@ public class UserRepositoryMySQL implements UserReposytory {
     @Override
     public List<User> fetchAllUsers() {
 
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try(Connection connection = this.dataSource.getConnection()) {
+
+            Statement statement = connection.createStatement();
             List<User> users = new ArrayList<>();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
@@ -160,7 +161,8 @@ public class UserRepositoryMySQL implements UserReposytory {
     @Override
     public void deleteUserBy(int id) {
 
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
             statement.execute("DELETE FROM users WHERE id=\"" + id + "\"");
         } catch (Exception e) {
@@ -172,7 +174,8 @@ public class UserRepositoryMySQL implements UserReposytory {
 
     @Override
     public void updateUser(UserNew userNew) {
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
             statement.execute("UPDATE users SET nick=\"" + userNew.getNick() + "\", pass=\"" + userNew.getPassword() + "\" WHERE id=\"" + userNew.getId() + "\"");
         } catch (Exception e) {
