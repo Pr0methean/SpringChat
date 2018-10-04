@@ -6,17 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        html {
+            background-color: chartreuse;
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+
+        body {
+            background-color: chartreuse;
+            width: 100%;
+            height: 100%;
+            float: left;
+            margin: 0;
+        }
+
+        h1 {
+            color: black;
+        }
+
+        button {
+            border: none;
+            background-color: black;
+            color: white;
+            padding: 7px 16px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        input {
+            padding: 6px;
+            width: 240px;
+            float: left;
+            border: 1px solid black;
+            outline: none;
+            margin: 0px 5px;
+        }
+
+        .message {
+            display: block;
+            width: 310px;
+            color: black;
+            padding: 5px;
+            margin: 5px 5px;
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        #messages {
+            max-height: 400px;
+            width: 330px;
+            overflow: auto;
+        }
+
+        #message-body {
+            display: block;
+            width: 330px;
+            margin: 20px auto;
+            float: none;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Chat</h1>
-    <input id="nick" type="text" placeholder="Enter your nick" /><button id="joinButton">Join</button>
-    <br />
-    <div id="messages">
+    <div id="message-body">
 
+        <h1>Chat</h1>
+        <form action="#">
+            <input id="nick" autofocus type="text" placeholder="Enter your nick" /><button id="joinButton">Join</button>
+        </form>
+        <br />
+        <div id="messages">
+
+        </div>
+        <form action="#">
+            <input style="display: none" autofocus id="input" type="test" placeholder="Enter message" />
+            <button style="display: none" id="button">Send</button>
+        </form>
     </div>
-    <input style="display: none" id="input" type="test" placeholder="Enter message" />
-    <button style="display: none" id="button">Send</button>
 </body>
 
 <script>
@@ -43,8 +111,8 @@
             let buttonNode = document.querySelector("#button");
 
             messageNode.style.display = "block";
-            inputNode.style.display = "inline-block";
-            buttonNode.style.display = "inline-block";
+            inputNode.style.display = "block";
+            buttonNode.style.display = "block";
 
             let host = window.location.host
             let ws = new WebSocket("ws://" + host + "//socket");
@@ -64,11 +132,14 @@
                 let nick = nickNode.value;
                 let message = inputNode.value;
                 inputNode.value = "";
-                ws.send(nick + " : " + message);
+                ws.send(nick + ": " + message);
+
+                addMessage(nick + " : " + message)
             })
 
             let addMessage = (message) => {
                 let pNode = document.createElement("p");
+                pNode.setAttribute("class", "message")
                 pNode.innerHTML = message;
                 messageNode.appendChild(pNode);
             }
