@@ -64,7 +64,7 @@
                 let nick = nickNode.value;
                 let message = inputNode.value;
                 inputNode.value = "";
-                ws.send(nick + ": " + message);
+                ws.send(nick + " : " + message);
             })
 
             let addMessage = (message) => {
