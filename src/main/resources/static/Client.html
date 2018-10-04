@@ -133,8 +133,6 @@
                 let message = inputNode.value;
                 inputNode.value = "";
                 ws.send(nick + ": " + message);
-
-                addMessage(nick + " : " + message)
             })
 
             let addMessage = (message) => {
