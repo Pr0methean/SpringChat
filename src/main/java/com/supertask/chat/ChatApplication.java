@@ -33,6 +33,7 @@ public class ChatApplication {
         System.out.println("TESTOWY COMMIT2");
         System.out.println("TESTOWY COMMIT2");
         System.out.println("DZIALAAAAAAAAAA!!!!");
+        System.out.println("TEST PO RESET");
 ////
 //        UserNew userNew1 = new UserNew("jarek", "test123");
 //        UserNew userNew2 = new UserNew("tomek", "test123");
