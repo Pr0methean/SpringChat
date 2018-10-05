@@ -17,17 +17,17 @@ import java.util.List;
 public class LogRepositoryMySQL implements LogReposytory {
 
     private DataSource dataSource;
-    private Connection connection;
 
+    @Autowired
     public LogRepositoryMySQL(DataSource dataSource) throws SQLException {
         this.dataSource = dataSource;
-        this.connection = dataSource.getConnection();
     }
 
 
     @Override
     public void saveLog(ServerLog serverLog) {
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO system_logs values (null,?,?,?,?)");
             preparedStatement.setTimestamp(1,Timestamp.from(serverLog.getDateOfLog()));
             preparedStatement.setString(2, serverLog.getTypeOfAction());
@@ -45,7 +45,8 @@ public class LogRepositoryMySQL implements LogReposytory {
     @Override
     public List<ServerLog> listLogsOnDate(String dateTime) {
 
-        try {
+        try(Connection connection = this.dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM system_logs WHERE dateOfLog LIKE '" + dateTime +"%'");
 

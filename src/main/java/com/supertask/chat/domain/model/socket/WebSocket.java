@@ -1,6 +1,7 @@
 package com.supertask.chat.domain.model.socket;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -27,4 +28,9 @@ public class WebSocket extends TextWebSocketHandler {
         sessions.add(session);
     }
 
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        this.sessions.remove(session);
+        System.out.println(this.sessions.size()+ "<< Web socket left open connection");
+    }
 }
