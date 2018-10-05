@@ -66,25 +66,27 @@
             margin: 20px auto;
             float: none;
         }
+
     </style>
 </head>
 
 <body>
-    <div id="message-body">
+<div id="message-body">
 
-        <h1>Chat</h1>
-        <form action="#">
-            <input id="nick" autofocus type="text" placeholder="Enter your nick" /><button id="joinButton">Join</button>
-        </form>
-        <br />
-        <div id="messages">
+    <h1>Chat</h1>
+    <form action="#">
+        <input id="nick" autofocus type="text" placeholder="Enter your nick"/>
+        <button id="joinButton">Join</button>
+    </form>
+    <br/>
+    <div id="messages">
 
-        </div>
-        <form action="#">
-            <input style="display: none" autofocus id="input" type="test" placeholder="Enter message" />
-            <button style="display: none" id="button">Send</button>
-        </form>
     </div>
+    <form action="#">
+        <input style="display: none" autofocus id="input" type="test" placeholder="Enter message"/>
+        <button style="display: none" id="button">Send</button>
+    </form>
+</div>
 </body>
 
 <script>
@@ -126,6 +128,7 @@
             ws.onmessage = function (event) {
                 console.log(event.data);
                 addMessage(event.data);
+                messageNode.scrollTop = messageNode.scrollHeight;
             }
 
             buttonNode.addEventListener("click", () => {
@@ -133,6 +136,7 @@
                 let message = inputNode.value;
                 inputNode.value = "";
                 ws.send(nick + ": " + message);
+                //addMessage(nick + ": " + message);
             })
 
             let addMessage = (message) => {
@@ -145,6 +149,7 @@
         }
 
     }
+
 
 
 
