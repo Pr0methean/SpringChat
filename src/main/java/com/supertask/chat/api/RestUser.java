@@ -5,17 +5,15 @@ import com.supertask.chat.api.restUser.UserNew;
 import com.supertask.chat.domain.model.ServerLog;
 import com.supertask.chat.domain.model.User;
 import com.supertask.chat.domain.model.dto.Link;
-import com.supertask.chat.domain.ports.LogReposytory;
 import com.supertask.chat.domain.ports.UserNotFindException;
 import com.supertask.chat.domain.ports.UserReposytory;
-import com.supertask.chat.domain.services.DbLogger;
+import com.supertask.chat.vendors.LoggerServiceModule.DbLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;

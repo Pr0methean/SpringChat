@@ -1,10 +1,26 @@
-package com.supertask.chat.domain.services.AuthenticateServiceModule.domain.model;
+package com.supertask.chat.vendors.AuthenticateServiceModule.domain.model;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 
-public class Token {
+class Token {
     private String value;
     private Instant dateOfCreated;
-    private Instant dateOfE
+    private Instant dateOfExpiry;
+
+
+    public void UpdateDataOfExpiry(Instant newDate){
+        this.dateOfExpiry = newDate;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public Instant getDateOfCreated() {
+        return dateOfCreated;
+    }
+
+    public Instant getDateOfExpiry() {
+        return dateOfExpiry;
+    }
 }

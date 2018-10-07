@@ -116,8 +116,9 @@
             inputNode.style.display = "block";
             buttonNode.style.display = "block";
 
-            let host = window.location.host
+            let host = window.location.host;
             let ws = new WebSocket("ws://" + host + "//socket");
+
 
             ws.onopen = function (event) {
                 let nick = nickNode.value;
@@ -129,7 +130,7 @@
                 console.log(event.data);
                 addMessage(event.data);
                 messageNode.scrollTop = messageNode.scrollHeight;
-            }
+            };
 
             buttonNode.addEventListener("click", () => {
                 let nick = nickNode.value;
@@ -141,7 +142,7 @@
 
             let addMessage = (message) => {
                 let pNode = document.createElement("p");
-                pNode.setAttribute("class", "message")
+                pNode.setAttribute("class", "message");
                 pNode.innerHTML = message;
                 messageNode.appendChild(pNode);
             }

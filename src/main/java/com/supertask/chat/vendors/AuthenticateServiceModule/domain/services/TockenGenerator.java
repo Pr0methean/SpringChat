@@ -1,12 +1,10 @@
-package com.supertask.chat.domain.services.AuthenticateServiceModule.domain.services;
+package com.supertask.chat.vendors.AuthenticateServiceModule.domain.services;
 
-
-import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 
-public class TockenGenerator {
+class TockenGenerator {
 
 
     public StringBuilder generatrTOcken() {

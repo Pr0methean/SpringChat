@@ -1,4 +1,4 @@
-package com.supertask.chat.domain.services;
+package com.supertask.chat.vendors.AuthenticateServiceModule.domain.services;
 
 import com.supertask.chat.domain.model.User;
 import com.supertask.chat.domain.ports.UserReposytory;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserAuthenticate {
+class UserAuthenticate {
 
 
     private UserReposytory userReposytory;

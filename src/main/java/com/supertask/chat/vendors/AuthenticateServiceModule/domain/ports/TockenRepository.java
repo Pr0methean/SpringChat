@@ -1,4 +1,4 @@
-package com.supertask.chat.domain.services.AuthenticateServiceModule.domain.ports;
+package com.supertask.chat.vendors.AuthenticateServiceModule.domain.ports;
 
 import com.supertask.chat.domain.model.User;
 

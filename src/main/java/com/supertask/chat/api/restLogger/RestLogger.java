@@ -4,7 +4,7 @@ package com.supertask.chat.api.restLogger;
 import com.supertask.chat.domain.model.ServerLog;
 import com.supertask.chat.domain.model.dto.Link;
 import com.supertask.chat.domain.ports.LogReposytory;
-import com.supertask.chat.domain.services.DbLogger;
+import com.supertask.chat.vendors.LoggerServiceModule.DbLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

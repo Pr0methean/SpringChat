@@ -1,4 +1,4 @@
-package com.supertask.chat.domain.services;
+package com.supertask.chat.vendors.LoggerServiceModule;
 
 import com.supertask.chat.domain.model.ServerLog;
 import com.supertask.chat.domain.ports.LogReposytory;

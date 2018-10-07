@@ -1,5 +1,8 @@
-package com.supertask.chat.domain.services.AuthenticateServiceModule.api;
+package com.supertask.chat.vendors.AuthenticateServiceModule.api;
 
-public class AuthenticationServiceFasade {
 
+public class AuthenticationServiceFasade  {
+
+    public void elo(){
+    }
 }

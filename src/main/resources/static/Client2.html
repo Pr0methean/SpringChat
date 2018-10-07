@@ -117,7 +117,7 @@
             buttonNode.style.display = "block";
 
             let host = window.location.host;
-            let ws = new WebSocket("ws://" + host + "//socket");
+            let ws = new SockJs("/talk);
 
 
             ws.onopen = function (event) {

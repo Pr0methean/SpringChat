@@ -16,16 +16,16 @@ public class WebSocket extends TextWebSocketHandler {
 
     List<WebSocketSession> sessions= new CopyOnWriteArrayList<>();
 
+
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) {
+        sessions.add(session);
+    }
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
         for (WebSocketSession webSocketSession : sessions) {
             webSocketSession.sendMessage(message);
         }
-    }
-
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) {
-        sessions.add(session);
     }
 
     @Override
