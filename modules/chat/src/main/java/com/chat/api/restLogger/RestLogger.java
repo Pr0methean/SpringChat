@@ -55,7 +55,6 @@ public class RestLogger {
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
         }
 
-
         return null;
     }
 
