@@ -1,10 +1,9 @@
-package com.chat.infrastructure;
+package com.messageRepisitory.infrastructure;
 
-import com.chat.domain.model.Message;
-import com.chat.domain.ports.MessageRepository;
-import com.chat.domain.ports.MessagesNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+
+import com.messageRepisitory.applications.exceprions.MessagesNotFoundException;
+import com.messageRepisitory.domain.model.Message;
+import com.messageRepisitory.domain.port.MessageRepository;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -12,13 +11,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+
 public class MessageRepositoryMySQL implements MessageRepository {
 
     private DataSource dataSource;
 
-    @Autowired
-    public MessageRepositoryMySQL(DataSource dataSource) throws SQLException {
+    public MessageRepositoryMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

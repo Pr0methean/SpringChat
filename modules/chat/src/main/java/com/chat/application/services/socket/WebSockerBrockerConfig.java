@@ -1,4 +1,4 @@
-//package com.chat.domain.model.socket;
+//package com.chat.application.services.socket;
 //
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
