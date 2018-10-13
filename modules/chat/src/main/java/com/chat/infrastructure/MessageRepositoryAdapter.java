@@ -3,7 +3,7 @@ package com.chat.infrastructure;
 import com.chat.domain.model.Message;
 import com.chat.domain.ports.MessageRepository;
 import com.chat.infrastructure.service.MapperModelMessages;
-import com.messageRepisitory.api.MessageRepisitoryFasade;
+import com.messageRepisitory.api.MessageRepositoryFacade;
 import com.messageRepisitory.applications.dto.MessageDTOout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,23 +15,23 @@ import java.util.List;
 @Repository
 public class MessageRepositoryAdapter implements MessageRepository {
 
-    private MessageRepisitoryFasade messageRepisitory;
+    private MessageRepositoryFacade messageRepository;
 
     @Autowired
     public MessageRepositoryAdapter(DataSource dataSource) {
-        this.messageRepisitory = MessageRepisitoryFasade.config(dataSource);
+        this.messageRepository = MessageRepositoryFacade.config(dataSource);
     }
 
     @Override
     public void saveMessage(Message messageToSave) {
         MessageDTOout messageDTOout = MapperModelMessages.returnMessageDTOout(messageToSave);
-        messageRepisitory.saveMessage(messageDTOout);
+        messageRepository.saveMessage(messageDTOout);
     }
 
     @Override
     public void deleteMessageBy(Long id) {
 
-        messageRepisitory.deleteMessageBy(id);
+        messageRepository.deleteMessageBy(id);
 
     }
 
@@ -39,12 +39,12 @@ public class MessageRepositoryAdapter implements MessageRepository {
     public void updateMessageBy(Message message) {
 
         MessageDTOout messageDTOout = MapperModelMessages.returnMessageDTOout(message);
-        messageRepisitory.updateMessageBy(messageDTOout);
+        messageRepository.updateMessageBy(messageDTOout);
     }
 
     @Override
     public Message fetchMessageBy(Long id) {
-        MessageDTOout messageDTOout = messageRepisitory.fetchMessageBy(id);
+        MessageDTOout messageDTOout = messageRepository.fetchMessageBy(id);
         Message message = MapperModelMessages.returnMessage(messageDTOout);
 
         return message;
@@ -52,7 +52,7 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
     @Override
     public List<Message> listMessages() {
-        List<MessageDTOout> messageDTOoutList = messageRepisitory.listMessages();
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessages();
         List<Message> messageList = new ArrayList<>();
 
         for (MessageDTOout messageDTOout : messageDTOoutList) {
@@ -67,7 +67,7 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
     @Override
     public List<Message> listMessagesContainPhrase(String phrase) {
-        List<MessageDTOout> messageDTOoutList = messageRepisitory.listMessagesContainPhrase(phrase);
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesContainPhrase(phrase);
 
         List<Message> messageList = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
     @Override
     public List<Message> listMessagesInDate(String dateTime) {
-        List<MessageDTOout> messageDTOoutList = messageRepisitory.listMessagesInDate(dateTime);
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesInDate(dateTime);
 
         List<Message> messageList = new ArrayList<>();
 
@@ -98,7 +98,7 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
     @Override
     public List<Message> listMessagesSender(Long idUser) {
-        List<MessageDTOout> messageDTOoutList = messageRepisitory.listMessagesSender(idUser);
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesSender(idUser);
 
         List<Message> messageList = new ArrayList<>();
 
@@ -114,7 +114,7 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
     @Override
     public List<Message> listMessagesReceived(Long idUser) {
-        List<MessageDTOout> messageDTOoutList = messageRepisitory.listMessagesReceived(idUser);
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesReceived(idUser);
 
         List<Message> messageList = new ArrayList<>();
         for (MessageDTOout messageDTOout : messageDTOoutList) {
@@ -130,7 +130,7 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
     @Override
     public List<Message> listMessagesBy(Long idSender, Long idReceiver, int startBound, int toBound) {
-        List<MessageDTOout> messageDTOoutList = messageRepisitory.listMessagesBy(idSender, idReceiver, startBound, toBound);
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesBy(idSender, idReceiver, startBound, toBound);
 
         List<Message> messageList = new ArrayList<>();
 

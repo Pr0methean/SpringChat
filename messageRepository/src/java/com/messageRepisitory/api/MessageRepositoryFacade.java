@@ -4,6 +4,7 @@ package com.messageRepisitory.api;
 import com.messageRepisitory.applications.dto.MessageDTOout;
 import com.messageRepisitory.applications.services.MapperMessage;
 import com.messageRepisitory.domain.model.Message;
+import com.messageRepisitory.domain.port.MessageRepository;
 import com.messageRepisitory.infrastructure.MessageRepositoryMySQL;
 
 import javax.sql.DataSource;
@@ -11,18 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MessageRepisitoryFasade {
+public class MessageRepositoryFacade {
 
-    public static MessageRepisitoryFasade config(DataSource dataSource) {
-        MessageRepositoryMySQL messageRepositoryMySQL = new MessageRepositoryMySQL(dataSource);
-        return new MessageRepisitoryFasade(messageRepositoryMySQL);
+    public static MessageRepositoryFacade config(DataSource dataSource) {
+        MessageRepository messageRepositoryMySQL = new MessageRepositoryMySQL(dataSource);
+        return new MessageRepositoryFacade(messageRepositoryMySQL);
     }
 
 
-    private MessageRepositoryMySQL messageRepositoryMySQL;
+    private MessageRepository messageRepositoryMySQL;
 
 
-    private MessageRepisitoryFasade(MessageRepositoryMySQL messageRepositoryMySQL) {
+    private MessageRepositoryFacade(MessageRepository messageRepositoryMySQL) {
         this.messageRepositoryMySQL = messageRepositoryMySQL;
     }
 
