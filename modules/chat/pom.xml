@@ -79,11 +79,17 @@
             <artifactId>cglib</artifactId>
             <version>3.2.8</version>
         </dependency>
-		<!-- WebSocket -->
+		<!-- webSocket -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>4.2.4.RELEASE</version>
+		</dependency>
+        <!--Hateoas-->
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+			<version>0.25.0.RELEASE</version>
 		</dependency>
 
     </dependencies>

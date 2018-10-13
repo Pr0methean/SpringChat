@@ -1,30 +1,31 @@
 package com.authenticate.api;
 
 
-import com.authenticate.domain.services.TokenAuthorization;
-import com.authenticate.domain.services.UserAuthenticate;
+import com.authenticate.appliacation.dto.TokenDTO;
+import com.authenticate.appliacation.exceptions.Unauthorized;
+import com.authenticate.appliacation.services.TokenAuthorization;
 
-public class AuthenticationServiceFacade {
+public class AuthenticationServiceFacade<T> {
 
     public static AuthenticationServiceFacade configure(){
 
-        TokenAuthorization tokenAuthorization = new TokenAuthorization();
-        UserAuthenticate userAuthenticate = new UserAuthenticate();
 
-        return new AuthenticationServiceFacade(tokenAuthorization,userAuthenticate);
+        TokenAuthorization tokenAuthorization = TokenAuthorization.configure();
+
+        return new AuthenticationServiceFacade(tokenAuthorization);
     }
 
-    private TokenAuthorization tokenAuthorization;
-    private UserAuthenticate userAuthenticate;
+    private TokenAuthorization<T> tokenAuthorization;
 
-    private AuthenticationServiceFacade(TokenAuthorization tokenAuthorization, UserAuthenticate userAuthenticate) {
+    private AuthenticationServiceFacade(TokenAuthorization tokenAuthorization) {
         this.tokenAuthorization = tokenAuthorization;
-        this.userAuthenticate = userAuthenticate;
     }
 
-    UserDTO findUserByTocken(TokenDTO token) {
+    T authorize(TokenDTO token) throws Unauthorized {
+        return tokenAuthorization.authorize(token);
+    }
 
-        tokenAuthorization.assignTokenToUser();
-        return new UserDTO();
+    public void assignToken(T object){
+        tokenAuthorization.assignToken(object);
     }
 }

@@ -25,7 +25,7 @@ public interface UserAuthenticator {
      * @return UserDTO
      * @throws UnauthorisedUserException
      */
-    User findUserByTocken(Token token) throws UnauthorisedUserException;
+    User findUserByToken(Token token) throws UnauthorisedUserException;
 
 
 }

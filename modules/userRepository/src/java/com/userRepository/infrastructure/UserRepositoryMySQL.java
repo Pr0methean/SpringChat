@@ -3,9 +3,13 @@ package com.userRepository.infrastructure;
 
 import com.userRepository.applications.dto.NewUserDTO;
 import com.userRepository.applications.dto.UserDTO;
+import com.userRepository.applications.exceptions.ErrorDuringSaveUserException;
+import com.userRepository.applications.exceptions.RepositorySQLException;
+import com.userRepository.applications.exceptions.UserNotExistException;
 import com.userRepository.domain.ports.UserRepository;
 
 import javax.sql.DataSource;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +27,10 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public int saveUser(NewUserDTO userNew) {
+    public int saveUser(NewUserDTO userNew) throws ErrorDuringSaveUserException, RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
+
             String userName = userNew.getNick();
             String userPass = userNew.getPassword();
 
@@ -39,68 +44,67 @@ public class UserRepositoryMySQL implements UserRepository {
             ResultSet set = preparedStatement.getGeneratedKeys();
             if (set.next()) {
                 return set.getInt(1);
-            } else {
-                return -1;
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RepositorySQLException("Insert Query Error: " + e.getMessage());
         }
-        return 0;
 
+        throw new ErrorDuringSaveUserException("User was not save correct");
     }
 
     @Override
-    public UserDTO fetchUserBy(int id) {
+    public UserDTO fetchUserBy(int id) throws UserNotExistException, RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
 
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
             if (resultSet.next()) {
                 String nick = resultSet.getString("nick");
                 return new UserDTO(id, nick);
-            } else {
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            throw new RepositorySQLException("Select Query Error: " + e.getMessage());
         }
-        return null;
+        throw new UserNotExistException("Not find user by id: " + id);
     }
 
 
     @Override
-    public NewUserDTO fetchUserNewBy(int id) {
+    public NewUserDTO fetchNewUserBy(int id) throws UserPrincipalNotFoundException, RepositorySQLException {
+
         try (Connection connection = this.dataSource.getConnection()) {
 
             Statement statement = connection.createStatement();
-
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
             if (resultSet.next()) {
                 String nick = resultSet.getString("nick");
                 String pass = resultSet.getString("pass");
                 return new NewUserDTO(id, nick, pass);
-            } else {
-
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RepositorySQLException("Select Query Error: " + e.getMessage());
         }
-        return null;
+        throw new UserPrincipalNotFoundException("Not find user by id: " + id);
     }
 
     @Override
-    public boolean userExistBy(String nick) {
+    public boolean userExistBy(String nick) throws RepositorySQLException {
         try (Connection connection = this.dataSource.getConnection()) {
 
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\"" + nick + "\"");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick= \"" + nick + "\"");
 
             if (resultSet.first()) {
                 return true;
@@ -110,40 +114,45 @@ public class UserRepositoryMySQL implements UserRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-
+            throw new RepositorySQLException("Select Query Error: "+e.getMessage());
         }
-        return false;
     }
 
     @Override
-    public UserDTO fetchUserBy(String nick, String password) {
+    public UserDTO fetchUserBy(String nick, String password) throws RepositorySQLException, UserNotExistException {
         try (Connection connection = this.dataSource.getConnection()) {
 
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\"" + nick + "\"" + " AND " + "pass=" + "\"" + password + "\"");
-            resultSet.next();
-            int id = resultSet.getInt("id");
+            if (resultSet.next()) {
 
-            return new UserDTO(id, nick);
+                int id = resultSet.getInt("id");
+                return new UserDTO(id, nick);
+
+            }else {
+                throw new UserNotExistException("Not Find user");
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RepositorySQLException("Select Query Error: "+e.getMessage());
         }
-        return null;
 
     }
 
     @Override
-    public List<UserDTO> fetchAllUsers() {
+    public List<UserDTO> fetchAllUsers() throws RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
             List<UserDTO> users = new ArrayList<>();
 
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
-            while (resultSet.next()) {
 
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String nick = resultSet.getString("nick");
                 users.add(new UserDTO(id, nick));
@@ -152,31 +161,36 @@ public class UserRepositoryMySQL implements UserRepository {
             return users;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RepositorySQLException("Select Query Error: "+e.getMessage());
         }
-        return null;
     }
 
     @Override
-    public void deleteUserBy(int id) {
+    public void deleteUserBy(int id) throws RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
             Statement statement = connection.createStatement();
             statement.execute("DELETE FROM users WHERE id=\"" + id + "\"");
+
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RepositorySQLException("Delete Query Error: "+e.getMessage());
         }
 
     }
 
     @Override
-    public void updateUser(NewUserDTO userNew) {
+    public void updateUser(NewUserDTO userNew) throws RepositorySQLException {
+
         try (Connection connection = this.dataSource.getConnection()) {
 
             Statement statement = connection.createStatement();
             statement.execute("UPDATE users SET nick=\"" + userNew.getNick() + "\", pass=\"" + userNew.getPassword() + "\" WHERE id=\"" + userNew.getId() + "\"");
+
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RepositorySQLException("Update Query Error: "+e.getMessage());
         }
     }
 

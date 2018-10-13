@@ -16,7 +16,8 @@ public class DbLogger {
     }
 
     public void log(ServerLog serverLog){
-
-        logReposytory.saveLog(serverLog);
+        new Thread(()->{
+            logReposytory.saveLog(serverLog);
+        }).start();
     }
 }

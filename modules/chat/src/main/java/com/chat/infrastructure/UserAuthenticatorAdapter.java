@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserAuthenticatorAdapter implements UserAuthenticator {
 
-    AuthenticationServiceFacade authenticationServiceFacade;
+    private AuthenticationServiceFacade authenticationServiceFacade;
 
 
     @Autowired
@@ -32,7 +32,7 @@ public class UserAuthenticatorAdapter implements UserAuthenticator {
     }
 
     @Override
-    public User findUserByTocken(Token token) throws UnauthorisedUserException {
+    public User findUserByToken(Token token) throws UnauthorisedUserException {
         return null;
     }
 }
