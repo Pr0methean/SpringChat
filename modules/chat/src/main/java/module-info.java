@@ -14,5 +14,6 @@ open module chat {
     requires authenticateService;
     requires userRepository;
     requires spring.hateoas;
+    requires messageRepository;
     //exports
 }

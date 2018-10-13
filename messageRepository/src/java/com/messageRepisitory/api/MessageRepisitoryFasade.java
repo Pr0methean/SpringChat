@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MessagesRepisitoryFasade {
+public class MessageRepisitoryFasade {
 
-    private static MessagesRepisitoryFasade config(DataSource dataSource) {
+    public static MessageRepisitoryFasade config(DataSource dataSource) {
         MessageRepositoryMySQL messageRepositoryMySQL = new MessageRepositoryMySQL(dataSource);
-        return new MessagesRepisitoryFasade(messageRepositoryMySQL);
+        return new MessageRepisitoryFasade(messageRepositoryMySQL);
     }
 
 
     private MessageRepositoryMySQL messageRepositoryMySQL;
 
 
-    private MessagesRepisitoryFasade(MessageRepositoryMySQL messageRepositoryMySQL) {
+    private MessageRepisitoryFasade(MessageRepositoryMySQL messageRepositoryMySQL) {
         this.messageRepositoryMySQL = messageRepositoryMySQL;
     }
 
