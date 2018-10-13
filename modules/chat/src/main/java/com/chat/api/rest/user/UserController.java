@@ -54,7 +54,7 @@ public class UserController {
         try {
 
             List<User> users = userReposytory.fetchAllUsers();
-            List<UserRestDTO> usersDTOS = new ArrayList<>();
+            List<UserRestDTO> userRestDTOList = new ArrayList<>();
 
             for (User user : users) {
                 UserRestDTO userRestDTO = new UserRestDTO();
@@ -65,11 +65,11 @@ public class UserController {
 
                 userRestDTO.add(link);
 
-                usersDTOS.add(userRestDTO);
+                userRestDTOList.add(userRestDTO);
             }
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
-            return new ResponseEntity<>(usersDTOS, httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(userRestDTOList, httpHeaders, HttpStatus.OK);
 
         } catch (Exception e) {
 
