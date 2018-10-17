@@ -2,102 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9117048f-6b7e-476b-bcbd-23d1a8681804" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/authenticateService-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/api/AuthenticationServiceFacade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/appliacation/dto/TokenDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/appliacation/exceptions/Unauthorized.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/appliacation/services/TokenAuthorization.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/appliacation/services/TokenGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/domain/model/Token.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/domain/ports/TokenRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/domain/ports/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/infrastructure/MemoryTockenRepository/MemoryTokenRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/com/authenticateService/infrastructure/MemoryTockenRepository/exceptions/TokenNotFindException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/classes/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticateService/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/api/MessageRepositoryFacade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/applications/dto/MessageDTOout.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/applications/exceprions/MessagesNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/applications/services/MapperMessage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/domain/model/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/domain/port/MessageRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/com/messageRepository/infrastructure/MessageRepositoryMySQL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/classes/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageRepository/target/messageRepository-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/ChatApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/ConfigurationJDBC.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/pages/IndexController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/pages/MyErrorController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/pages/WebSocketClientController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/rest/restLogger/RestLogger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/rest/restMessage/MessageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/rest/user/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/rpc/LoginRPC.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/api/rpc/UsetToLogin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/dto/message/MessageRestDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/dto/user/NewUserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/dto/user/UserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/dto/user/UserRestDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/services/MessageMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/services/NewUserMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/services/UserMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/services/socket/WebSocket.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/application/services/socket/WebSocketConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/model/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/model/NewUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/model/ServerLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/model/Token.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/LogReposytory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/MessageRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/MessagesNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/UserAuthenticatorPort/UnauthorisedUserException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/UserAuthenticatorPort/UserAuthenticator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/UserAuthenticatorPort/UserNotExistException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/UserNotFindException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/domain/ports/UserReposytory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/infrastructure/DbLogger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/infrastructure/LogRepositoryMySQL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/infrastructure/MessageRepositoryAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/infrastructure/UserAuthenticatorAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/infrastructure/UserRepositoryAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/com/springChat/infrastructure/service/MapperModelMessages.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/config/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/config/database.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/config/log4j.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/static/Client.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/classes/static/Client2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/springChat-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springChat/target/springChat-1.0-SNAPSHOT.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/api/UserRepositoryFacade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/applications/dto/NewUserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/applications/dto/UserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/applications/exceptions/ErrorDuringSaveUserException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/applications/exceptions/RepositorySQLException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/applications/exceptions/UserNotExistException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/domain/model/NewUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/domain/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/domain/ports/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/com/userRepository/infrastructure/UserRepositoryMySQL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/classes/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRepository/target/userRepository-1.0-SNAPSHOT.jar" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -158,18 +65,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/springChat/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="162" column="42" selection-start-line="162" selection-start-column="42" selection-end-line="162" selection-end-column="42" />
+            <state relative-caret-position="158">
+              <caret line="160" column="21" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="module-info.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/springChat/src/main/java/module-info.java">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
@@ -177,18 +97,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
               <caret line="23" selection-start-line="23" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pomX.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/springChat/pomX.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="14" selection-start-line="14" selection-end-line="25" selection-end-column="17" />
-              <folding>
-                <element signature="n#dependencies#0;n#project#0;n#!!top" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -213,8 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/authenticateService/src/main/java/com/authenticateService/domain/ports/User.java" />
-        <option value="$PROJECT_DIR$/authenticateService/src/main/java/com/authenticateService/domain/model/Token.java" />
         <option value="$PROJECT_DIR$/authenticateService/src/main/java/com/authenticateService/appliacation/services/TokenGenerator.java" />
         <option value="$PROJECT_DIR$/authenticateService/src/main/java/com/authenticateService/infrastructure/MemoryTockenRepository/MemoryTokenRepository.java" />
         <option value="$PROJECT_DIR$/authenticateService/src/main/java/com/authenticateService/domain/ports/TokenRepository.java" />
@@ -264,6 +170,8 @@
         <option value="$PROJECT_DIR$/springChat/src/main/java/com/springChat/ChatApplication.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/springChat/pom.xml" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -316,23 +224,7 @@
             <path>
               <item name="ModularChat" type="b2602c69:ProjectViewProjectNode" />
               <item name="ModularChat" type="462c0819:PsiDirectoryNode" />
-              <item name="authenticateService" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ModularChat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ModularChat" type="462c0819:PsiDirectoryNode" />
-              <item name="messageRepository" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ModularChat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ModularChat" type="462c0819:PsiDirectoryNode" />
               <item name="springChat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ModularChat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ModularChat" type="462c0819:PsiDirectoryNode" />
-              <item name="springChat" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -346,6 +238,11 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15779093" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Paweł\Desktop\Git\ModularChat" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -440,8 +337,8 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.32980332" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30139104" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3446677" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30139104" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3446677" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2934947" />
@@ -462,20 +359,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/springChat/src/main/java/com/springChat/api/pages/WebSocketClientController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/springChat/src/main/java/com/springChat/api/rpc/UsetToLogin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/springChat/src/main/java/com/springChat/application/dto/user/NewUserDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -875,8 +758,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/springChat/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="162" column="42" selection-start-line="162" selection-start-column="42" selection-end-line="162" selection-end-column="42" />
+        <state relative-caret-position="158">
+          <caret line="160" column="21" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
         </state>
       </provider>
     </entry>
