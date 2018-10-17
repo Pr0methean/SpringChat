@@ -51,32 +51,25 @@ public class UserController {
     }
 
 
-    // TODO: 17.10.2018 Do refactor of this Endpoint
+    // TODO: 17.10.2018 Change mapping:
     @CrossOrigin
     @GetMapping("/users/login/{nick},{pass}")
-    public UserDTO getUserByNickPass(HttpServletRequest request, HttpServletResponse response,
+    public ResponseEntity<UserDTO> getUserByNickPass(HttpServletRequest request, HttpServletResponse response,
                                      @PathVariable("nick") String userNick, @PathVariable("pass") String userPass){
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Content-type","application/json");
-
+        HttpHeaders httpHeaders = this.getHeaders();
         try {
             UserDTO userDTO = this.userMapper.mapToUserDTO(userReposytory.fetchUserBy(userNick,userPass));
             //userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
-            return userDTO;
-        } catch (UserNotFindException e) {
+
+            return new ResponseEntity<>(userDTO, httpHeaders, HttpStatus.OK);
+        } catch (Exception e) {
+
             e.printStackTrace();
-            response.setStatus(409);
-            response.setHeader("ErrorMessage", e.getMessage());
+            httpHeaders.set("Error-message", e.getMessage());
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
-            return null;
-        } catch (UserNotExistException e) {
-            e.printStackTrace();
-        } catch (RepositorySQLException e) {
-            e.printStackTrace();
         }
-        return null;
+        return new ResponseEntity<>( httpHeaders, HttpStatus.CONFLICT);
     }
 
 
