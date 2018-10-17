@@ -45,8 +45,9 @@ public class UserController {
 
     private HttpHeaders getHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Access-Control-Allow-Origin", "*");
+//        httpHeaders.add("Access-Control-Allow-Origin", "*");
         httpHeaders.add("Content-type", "application/json");
+        System.out.println(httpHeaders.entrySet());
         return httpHeaders;
     }
 
@@ -56,12 +57,13 @@ public class UserController {
     @GetMapping("/users/login/{nick},{pass}")
     public ResponseEntity<UserDTO> getUserByNickPass(HttpServletRequest request, HttpServletResponse response,
                                      @PathVariable("nick") String userNick, @PathVariable("pass") String userPass){
+
         HttpHeaders httpHeaders = this.getHeaders();
         try {
             UserDTO userDTO = this.userMapper.mapToUserDTO(userReposytory.fetchUserBy(userNick,userPass));
             //userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
-            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
 
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
             return new ResponseEntity<>(userDTO, httpHeaders, HttpStatus.OK);
         } catch (Exception e) {
 
