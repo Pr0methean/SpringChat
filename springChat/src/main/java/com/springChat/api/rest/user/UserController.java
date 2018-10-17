@@ -55,7 +55,7 @@ public class UserController {
     // TODO: 17.10.2018 Change mapping:
     @CrossOrigin
     @GetMapping("/users/login/{nick},{pass}")
-    public ResponseEntity<UserDTO> getUserByNickPass(HttpServletRequest request, HttpServletResponse response,
+    public ResponseEntity<UserDTO> getUserByNickPass(HttpServletRequest request,
                                      @PathVariable("nick") String userNick, @PathVariable("pass") String userPass){
 
         HttpHeaders httpHeaders = this.getHeaders();
