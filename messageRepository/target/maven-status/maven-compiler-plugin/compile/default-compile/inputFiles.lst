@@ -1,8 +1,0 @@
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\module-info.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\applications\dto\MessageDTOout.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\applications\exceprions\MessagesNotFoundException.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\infrastructure\MessageRepositoryMySQL.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\applications\services\MapperMessage.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\domain\model\Message.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\domain\port\MessageRepository.java
-C:\Users\Paweł\Desktop\Git\ModularChat\messageRepository\src\main\java\com\messageRepository\api\MessageRepositoryFacade.java
