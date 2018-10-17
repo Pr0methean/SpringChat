@@ -7,8 +7,11 @@ import com.springChat.application.services.UserMapper;
 import com.springChat.domain.model.NewUser;
 import com.springChat.domain.model.ServerLog;
 import com.springChat.domain.model.User;
+import com.springChat.domain.ports.UserNotFindException;
 import com.springChat.domain.ports.UserReposytory;
 import com.springChat.infrastructure.DbLogger;
+import com.userRepository.applications.exceptions.RepositorySQLException;
+import com.userRepository.applications.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,36 @@ public class UserController {
         httpHeaders.add("Content-type", "application/json");
         return httpHeaders;
     }
+
+
+    // TODO: 17.10.2018 Do refactor of this Endpoint
+    @CrossOrigin
+    @GetMapping("/users/login/{nick},{pass}")
+    public UserDTO getUserByNickPass(HttpServletRequest request, HttpServletResponse response,
+                                     @PathVariable("nick") String userNick, @PathVariable("pass") String userPass){
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Content-type","application/json");
+
+        try {
+            UserDTO userDTO = this.userMapper.mapToUserDTO(userReposytory.fetchUserBy(userNick,userPass));
+            //userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
+            return userDTO;
+        } catch (UserNotFindException e) {
+            e.printStackTrace();
+            response.setStatus(409);
+            response.setHeader("ErrorMessage", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
+            return null;
+        } catch (UserNotExistException e) {
+            e.printStackTrace();
+        } catch (RepositorySQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @GetMapping("/users")
     public ResponseEntity<List<UserRestDTO>> getUsers(HttpServletRequest request) {
