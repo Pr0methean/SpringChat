@@ -1,0 +1,8 @@
+com\messageRepository\api\MessageRepositoryFacade.class
+com\messageRepository\applications\dto\MessageDTOout.class
+com\messageRepository\domain\model\Message.class
+com\messageRepository\infrastructure\MessageRepositoryMySQL.class
+module-info.class
+com\messageRepository\applications\services\MapperMessage.class
+com\messageRepository\applications\exceprions\MessagesNotFoundException.class
+com\messageRepository\domain\port\MessageRepository.class

@@ -1,0 +1,11 @@
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\appliacation\services\TokenAuthorization.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\infrastructure\MemoryTockenRepository\MemoryTokenRepository.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\infrastructure\MemoryTockenRepository\exceptions\TokenNotFindException.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\module-info.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\domain\ports\User.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\domain\ports\TokenRepository.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\appliacation\dto\TokenDTO.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\domain\model\Token.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\appliacation\exceptions\Unauthorized.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\appliacation\services\TokenGenerator.java
+C:\Users\Paweł\Desktop\Git\ModularChat\authenticateService\src\main\java\com\authenticateService\api\AuthenticationServiceFacade.java
