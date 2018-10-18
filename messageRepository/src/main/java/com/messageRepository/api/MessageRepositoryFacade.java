@@ -132,4 +132,16 @@ public class MessageRepositoryFacade {
 
         return messageDTOoutList;
     }
+
+    public List<MessageDTOout> getConversationFor(Long idSender, Long idReceiver, int limit, int startBound){
+        List<Message> messageList = this.messageRepositoryMySQL.getConversationFor(idSender, idReceiver, limit, startBound);
+        List<MessageDTOout> messageDTOoutList = new ArrayList<>();
+
+        for (Message message : messageList) {
+
+            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            messageDTOoutList.add(messageDTOout);
+        }
+        return messageDTOoutList;
+    }
 }
