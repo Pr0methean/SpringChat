@@ -129,8 +129,8 @@ public class MessageRepositoryAdapter implements MessageRepository {
     }
 
     @Override
-    public List<Message> listMessagesBy(Long idSender, Long idReceiver, int startBound, int toBound) {
-        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesBy(idSender, idReceiver, startBound, toBound);
+    public List<Message> listMessagesBy(Long idSender, Long idReceiver, int limit, int startBound) {
+        List<MessageDTOout> messageDTOoutList = messageRepository.listMessagesBy(idSender, idReceiver, limit, startBound);
 
         List<Message> messageList = new ArrayList<>();
 
@@ -141,5 +141,21 @@ public class MessageRepositoryAdapter implements MessageRepository {
 
 
         return messageList;
+    }
+
+    @Override
+    public List<Message> getConversationFor(Long idSender, Long idReceiver, int limit, int startBound) {
+        List<MessageDTOout> messageDTOoutList = messageRepository.getConversationFor(idSender, idReceiver, limit, startBound);
+
+        List<Message> messageList = new ArrayList<>();
+
+        for (MessageDTOout messageDTOout : messageDTOoutList) {
+            Message message = MapperModelMessages.returnMessage(messageDTOout);
+            messageList.add(message);
+        }
+
+
+        return messageList;
+
     }
 }
