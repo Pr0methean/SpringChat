@@ -278,34 +278,34 @@ public class MessageRepositoryMySQL implements MessageRepository {
             List<Message> listMessages = new ArrayList<>();
 
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM messages WHERE idSender = ? AND idReceiver = ?  OR idSender = ? AND idReceiver = ? ORDER BY dateSent desc LIMIT ? OFFSET ?");
+                    "SELECT * FROM messages WHERE idSender = ? AND idReceiver = ? OR idSender = ? AND idReceiver = ? ORDER BY dateSent desc LIMIT ? OFFSET ?");
 
             preparedStatement.setLong(1, idSender);
             preparedStatement.setLong(4, idSender);
+
             preparedStatement.setLong(2, idReceiver);
             preparedStatement.setLong(3, idReceiver);
+
             preparedStatement.setInt(5, limit);
             preparedStatement.setInt(6, startBound);
             ResultSet resultSet = preparedStatement.executeQuery();
-
 
             while (resultSet.next()) {
 
                 Long id = resultSet.getLong("id");
                 String content = resultSet.getString("content");
                 Timestamp dataMySQL = resultSet.getTimestamp("dateSent");
+                Long idSenderDb = resultSet.getLong("idSender");
+                Long idReceiverDb = resultSet.getLong("idReceiver");
 
                 Instant sentData = dataMySQL.toInstant();
 
-                listMessages.add(new Message(id, content, sentData, idSender, idReceiver));
+                listMessages.add(new Message(id, content, sentData, idSenderDb, idReceiverDb));
             }
-
             return listMessages;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new MessagesNotFoundException("Messages not found");
         }
-
     }
-
 }

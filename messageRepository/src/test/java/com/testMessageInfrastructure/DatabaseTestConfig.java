@@ -17,7 +17,7 @@ public class DatabaseTestConfig {
     private final String password = "mysqlroot404";
     private final String url = "jdbc:mysql://51.38.133.76:3306/chattest?verifyServerCertificate=false&useSSL=false&requireSSL=false";
 
-
+        //TODO: add database.propertis
     public DatabaseTestConfig() {
         //        Properties props = new Properties();
 //        FileInputStream fis = null;
@@ -55,9 +55,8 @@ public class DatabaseTestConfig {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-    public void createDefoultTable() {
+    public void createDefaultsTable() {
 
         try (Connection connection = this.dataSource.getConnection()){
             Statement statement = connection.createStatement();
@@ -73,7 +72,6 @@ public class DatabaseTestConfig {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public DataSource getDataSource() {

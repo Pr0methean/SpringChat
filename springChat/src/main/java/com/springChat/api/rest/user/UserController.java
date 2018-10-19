@@ -1,17 +1,13 @@
 package com.springChat.api.rest.user;
 
 
-import com.springChat.application.dto.user.UserDTO;
 import com.springChat.application.dto.user.UserRestDTO;
 import com.springChat.application.services.UserMapper;
 import com.springChat.domain.model.NewUser;
 import com.springChat.domain.model.ServerLog;
 import com.springChat.domain.model.User;
-import com.springChat.domain.ports.UserNotFindException;
 import com.springChat.domain.ports.UserReposytory;
 import com.springChat.infrastructure.DbLogger;
-import com.userRepository.applications.exceptions.RepositorySQLException;
-import com.userRepository.applications.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +40,7 @@ public class UserController {
 
     private HttpHeaders getHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add("Access-Control-Allow-Origin", "*");
+        httpHeaders.add("Access-Control-Allow-Origin", "*");
         httpHeaders.add("Content-type", "application/json");
         System.out.println(httpHeaders.entrySet());
         return httpHeaders;
@@ -53,14 +48,13 @@ public class UserController {
 
 
     // TODO: 17.10.2018 Change mapping:
-    @CrossOrigin
     @GetMapping("/users/login/{nick},{pass}")
-    public ResponseEntity<UserDTO> getUserByNickPass(HttpServletRequest request,
+    public ResponseEntity<UserRestDTO> getUserByNickPass(HttpServletRequest request,
                                      @PathVariable("nick") String userNick, @PathVariable("pass") String userPass){
 
         HttpHeaders httpHeaders = this.getHeaders();
         try {
-            UserDTO userDTO = this.userMapper.mapToUserDTO(userReposytory.fetchUserBy(userNick,userPass));
+            UserRestDTO userDTO = this.userMapper.meptoUesrRestDTO(userReposytory.fetchUserBy(userNick,userPass));
             //userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
@@ -110,21 +104,21 @@ public class UserController {
         return new ResponseEntity<>(null, httpHeaders, HttpStatus.CONFLICT);
     }
 
-
     @CrossOrigin
     @PostMapping("/users")
-    public ResponseEntity<UserDTO> newUser(HttpServletRequest request, @RequestBody NewUser newUser) {
+    public ResponseEntity<UserRestDTO> newUser(HttpServletRequest request, @RequestBody NewUser newUser) {
 
         HttpHeaders httpHeaders = getHeaders();
         try {
 
             int userID = userReposytory.saveUser(newUser);
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(userID);
-            userDTO.setNick(newUser.getNick());
+            User user = new User();
+            user.setId(userID);
+            user.setNick(newUser.getNick());
+            UserRestDTO userRestDTO = userMapper.meptoUesrRestDTO(user);
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
-            return new ResponseEntity<>(userDTO, httpHeaders, HttpStatus.CREATED);
+            return new ResponseEntity<>(userRestDTO, httpHeaders, HttpStatus.CREATED);
 
         } catch (Exception e) {
 
@@ -132,19 +126,18 @@ public class UserController {
             httpHeaders.set("Error-message", e.getMessage());
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
         }
-        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CONFLICT);
+        return new ResponseEntity<>( httpHeaders, HttpStatus.CONFLICT);
     }
 
 
-    @CrossOrigin
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserDTO> getUser(HttpServletRequest request, @PathVariable("id") int userID) {
+    public ResponseEntity<UserRestDTO> getUser(HttpServletRequest request, @PathVariable("id") int userID) {
 
         HttpHeaders httpHeaders = getHeaders();
         try {
 
             User user = userReposytory.fetchUserBy(userID);
-            UserDTO userDTO = this.userMapper.mapToUserDTO(user);
+            UserRestDTO userDTO = this.userMapper.meptoUesrRestDTO(user);
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
             return new ResponseEntity<>(userDTO, httpHeaders, HttpStatus.OK);
@@ -159,10 +152,9 @@ public class UserController {
 
     }
 
-
     @CrossOrigin
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDTO> replaceUser(HttpServletRequest request, @PathVariable("id") int userID, @RequestBody NewUser newUser) {
+    public ResponseEntity<UserRestDTO> replaceUser(HttpServletRequest request, @PathVariable("id") int userID, @RequestBody NewUser newUser) {
 
         HttpHeaders httpHeaders = getHeaders();
         try {
@@ -199,10 +191,9 @@ public class UserController {
         return new ResponseEntity(httpHeaders, HttpStatus.CONFLICT);
     }
 
-
     @CrossOrigin
     @PatchMapping("/users/{id}")
-    public ResponseEntity<UserDTO> updateUser(HttpServletRequest request, @PathVariable("id") int userID, @RequestBody NewUser newUserREST) {
+    public ResponseEntity<UserRestDTO> updateUser(HttpServletRequest request, @PathVariable("id") int userID, @RequestBody NewUser newUserREST) {
 
         HttpHeaders httpHeaders = getHeaders();
         try {
@@ -221,7 +212,7 @@ public class UserController {
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
 
-            UserDTO newUserDTO = this.userMapper.mapToUserDTO(new User(newUserREST.getId(),newUserREST.getNick()));
+            UserRestDTO newUserDTO = this.userMapper.meptoUesrRestDTO(new User(newUserREST.getId(),newUserREST.getNick()));
             return new ResponseEntity<>(newUserDTO, httpHeaders, HttpStatus.OK);
 
         } catch (Exception e) {

@@ -4,13 +4,13 @@ package com.testMessageInfrastructure;
 import com.messageRepository.applications.exceprions.MessagesNotFoundException;
 import com.messageRepository.domain.model.Message;
 import com.messageRepository.infrastructure.MessageRepositoryMySQL;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,7 +33,7 @@ public class TestedDataBase {
     @BeforeEach
     public void beforeTest() {
         databaseTestConfig.dropTables();
-        databaseTestConfig.createDefoultTable();
+        databaseTestConfig.createDefaultsTable();
     }
 
     @AfterEach
@@ -51,7 +51,7 @@ public class TestedDataBase {
 
         //given
         databaseTestConfig.dropTables();
-        databaseTestConfig.createDefoultTable();
+        databaseTestConfig.createDefaultsTable();
         Message message = new Message();
         message.setContent("Testing content ");
         message.setIdReceiver(1L);
@@ -225,7 +225,6 @@ public class TestedDataBase {
         Instant dateInstant = Instant.now();
 
 
-
         Message message = new Message();
         message.setContent("Testing content ");
         message.setIdReceiver(1L);
@@ -245,7 +244,7 @@ public class TestedDataBase {
         message2.setSentDate(Instant.now());
 
         String data = Instant.now().toString();
-        data = data.substring(0,10);
+        data = data.substring(0, 10);
 
         //when
         messageRepositoryMySQL.saveMessage(message);
@@ -374,5 +373,65 @@ public class TestedDataBase {
         log.info("Success test : shouldReturnOneMessagesReceived");
     }
 
-    //todo: should write test to method ordered list
+    @Test
+    public void shouldReturnConversationOrderedByDay() {
+
+        //given
+        Long userMark = 1L;
+        Long userJohn = 2L;
+        Long userAnna = 3L;
+
+        Message message1 = null;
+        Message message2 = null;
+        Message message3 = null;
+        Message message4 = null;
+        Message message5 = null;
+
+        message1 = new Message();
+        message1.setContent("Mark say to John1");
+        message1.setIdSender(userMark);
+        message1.setIdReceiver(userJohn);
+        message1.setSentDate(Instant.now());
+
+        message2 = new Message();
+        message2.setContent("Mark say to John2");
+        message2.setIdSender(userMark);
+        message2.setIdReceiver(userJohn);
+        message2.setSentDate(Instant.now());
+
+
+        message3 = new Message();
+        message3.setContent("Anna say to John3");
+        message3.setIdSender(userAnna);
+        message3.setIdReceiver(userJohn);
+        message3.setSentDate(Instant.now());
+
+        message4 = new Message();
+        message4.setContent("John say to Mark4");
+        message4.setIdSender(userJohn);
+        message4.setIdReceiver(userMark);
+        message4.setSentDate(Instant.now());
+
+        message5 = new Message();
+        message5.setContent("Anna say to John5");
+        message5.setIdSender(userAnna);
+        message5.setIdReceiver(userJohn);
+        message5.setSentDate(Instant.now());
+
+
+        //when
+        messageRepositoryMySQL.saveMessage(message3);
+        messageRepositoryMySQL.saveMessage(message2);
+        messageRepositoryMySQL.saveMessage(message5);
+        messageRepositoryMySQL.saveMessage(message4);
+        messageRepositoryMySQL.saveMessage(message1);
+
+        //then
+        List<Message> messageList = messageRepositoryMySQL.getConversationFor(userMark, userJohn, 10, 0);
+        List<Message> messageList2 = messageRepositoryMySQL.getConversationFor(userJohn, userMark, 10, 0);
+
+        assertEquals(messageList, messageList2);
+
+    }
+
 }

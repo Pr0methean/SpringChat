@@ -37,11 +37,10 @@ public class MessageController {
 
     private HttpHeaders getHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Access-Control-Allow-Origin", "*");
+//        httpHeaders.add("Access-Control-Allow-Origin", "*");
         httpHeaders.add("Content-type", "application/json");
         return httpHeaders;
     }
-
 
     @CrossOrigin
     @GetMapping("/messages")
@@ -67,7 +66,6 @@ public class MessageController {
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
 
-    @CrossOrigin
     @GetMapping("/messages/{id}")
     public ResponseEntity<MessageRestDTO> getMessageById(HttpServletRequest request, @PathVariable("id") Long idMessage) {
 
@@ -86,7 +84,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/phrase/{phrase}")
     public ResponseEntity<List<MessageRestDTO>> getMessageContainPhrase(HttpServletRequest request, HttpServletResponse response, @PathVariable("phrase") String phrase) {
@@ -112,7 +109,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/time/{dateTime}")
     public ResponseEntity<List<MessageRestDTO>> getMessageContainDate(HttpServletRequest request, @PathVariable("dateTime") String dateTime) {
@@ -140,7 +136,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/sender/{idUserSent}")
     public ResponseEntity<List<MessageRestDTO>> getMessageSent(HttpServletRequest request, HttpServletResponse response, @PathVariable("idUserSent") Long idUserSent) {
@@ -169,7 +164,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
 
     @CrossOrigin
     @GetMapping("/messages/receiver/{idUserReceive}")
@@ -218,7 +212,6 @@ public class MessageController {
         }
         return new ResponseEntity(httpHeaders,HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @DeleteMapping("/messages/{id}")
     public ResponseEntity deleteMassage(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long idMessage) {
@@ -236,7 +229,6 @@ public class MessageController {
         }
         return new ResponseEntity(httpHeaders,HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/by/{idSender},{idReceiver}/{limit},{startBound}")
     public ResponseEntity<List<MessageRestDTO>> listMessagesBy(HttpServletRequest request, HttpServletResponse response,
@@ -265,7 +257,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders,HttpStatus.OK);
     }
-
     @CrossOrigin
     @GetMapping("/messages/conversation/{idSender},{idReceiver}/{limit},{startBound}")
     public ResponseEntity<List<MessageRestDTO>> getConversationFor(HttpServletRequest request, HttpServletResponse response,
@@ -278,7 +269,9 @@ public class MessageController {
 
             messageList.addAll(messageRepository.getConversationFor(idSender, idReceiver, limit, startBound));
 
+
             for (Message message : messageList) {
+                System.out.println(message);
                 messageDTOList.add(messageMapper.mapToMessageRestDTO(message));
             }
 

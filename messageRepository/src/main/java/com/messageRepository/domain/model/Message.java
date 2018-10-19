@@ -83,6 +83,17 @@ public class Message {
         result = 31 * result + (idReceiver != null ? idReceiver.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", sentDate=" + sentDate +
+                ", idSender=" + idSender +
+                ", idReceiver=" + idReceiver +
+                '}';
+    }
 }
 
 
