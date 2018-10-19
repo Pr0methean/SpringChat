@@ -278,7 +278,7 @@ public class MessageRepositoryMySQL implements MessageRepository {
             List<Message> listMessages = new ArrayList<>();
 
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM messages WHERE idSender = ? AND idReceiver = ? OR idSender = ? AND idReceiver = ? ORDER BY dateSent desc LIMIT ? OFFSET ?");
+                    "SELECT * FROM messages WHERE idSender = ? AND idReceiver = ? OR idSender = ? AND idReceiver = ? ORDER BY dateSent asc LIMIT ? OFFSET ?");
 
             preparedStatement.setLong(1, idSender);
             preparedStatement.setLong(4, idSender);

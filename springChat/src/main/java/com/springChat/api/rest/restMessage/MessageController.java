@@ -271,7 +271,6 @@ public class MessageController {
 
 
             for (Message message : messageList) {
-                System.out.println(message);
                 messageDTOList.add(messageMapper.mapToMessageRestDTO(message));
             }
 
