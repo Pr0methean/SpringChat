@@ -9,7 +9,6 @@ import com.springChat.domain.ports.MessageRepository;
 import com.springChat.domain.ports.MessagesNotFoundException;
 import com.springChat.infrastructure.DbLogger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +37,10 @@ public class MessageController {
 
     private HttpHeaders getHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Access-Control-Allow-Origin", "*");
+//        httpHeaders.add("Access-Control-Allow-Origin", "*");
         httpHeaders.add("Content-type", "application/json");
         return httpHeaders;
     }
-
 
     @CrossOrigin
     @GetMapping("/messages")
@@ -68,7 +66,6 @@ public class MessageController {
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
 
-    @CrossOrigin
     @GetMapping("/messages/{id}")
     public ResponseEntity<MessageRestDTO> getMessageById(HttpServletRequest request, @PathVariable("id") Long idMessage) {
 
@@ -87,7 +84,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/phrase/{phrase}")
     public ResponseEntity<List<MessageRestDTO>> getMessageContainPhrase(HttpServletRequest request, HttpServletResponse response, @PathVariable("phrase") String phrase) {
@@ -113,7 +109,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/time/{dateTime}")
     public ResponseEntity<List<MessageRestDTO>> getMessageContainDate(HttpServletRequest request, @PathVariable("dateTime") String dateTime) {
@@ -141,7 +136,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @GetMapping("/messages/sender/{idUserSent}")
     public ResponseEntity<List<MessageRestDTO>> getMessageSent(HttpServletRequest request, HttpServletResponse response, @PathVariable("idUserSent") Long idUserSent) {
@@ -170,7 +164,6 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders, HttpStatus.CONFLICT);
     }
-
 
     @CrossOrigin
     @GetMapping("/messages/receiver/{idUserReceive}")
@@ -219,7 +212,6 @@ public class MessageController {
         }
         return new ResponseEntity(httpHeaders,HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @DeleteMapping("/messages/{id}")
     public ResponseEntity deleteMassage(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long idMessage) {
@@ -237,18 +229,17 @@ public class MessageController {
         }
         return new ResponseEntity(httpHeaders,HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
-    @GetMapping("/messages/by/{idSender},{idReceiver}/{startBound},{toBound}")
+    @GetMapping("/messages/by/{idSender},{idReceiver}/{limit},{startBound}")
     public ResponseEntity<List<MessageRestDTO>> listMessagesBy(HttpServletRequest request, HttpServletResponse response,
-                                               @PathVariable("idSender") Long idSender, @PathVariable("idReceiver") Long idReceiver,
-                                               @PathVariable("startBound") int startBound, @PathVariable("toBound") int toBound) {
+                                                               @PathVariable("idSender") Long idSender, @PathVariable("idReceiver") Long idReceiver,
+                                                               @PathVariable("limit") int limit, @PathVariable("startBound") int startBound) {
         HttpHeaders httpHeaders = getHeaders();
         try {
             List<MessageRestDTO> messageDTOList = new ArrayList<>();
             List<Message> messageList = new ArrayList<>();
 
-            messageList.addAll(messageRepository.listMessagesBy(idSender, idReceiver, startBound, toBound));
+            messageList.addAll(messageRepository.listMessagesBy(idSender, idReceiver, limit, startBound));
 
             for (Message message : messageList) {
                 messageDTOList.add(messageMapper.mapToMessageRestDTO(message));
@@ -266,6 +257,34 @@ public class MessageController {
         }
         return new ResponseEntity<>(httpHeaders,HttpStatus.OK);
     }
+    @CrossOrigin
+    @GetMapping("/messages/conversation/{idSender},{idReceiver}/{limit},{startBound}")
+    public ResponseEntity<List<MessageRestDTO>> getConversationFor(HttpServletRequest request, HttpServletResponse response,
+                                                               @PathVariable("idSender") Long idSender, @PathVariable("idReceiver") Long idReceiver,
+                                                               @PathVariable("limit") int limit, @PathVariable("startBound") int startBound) {
+        HttpHeaders httpHeaders = getHeaders();
+        try {
+            List<MessageRestDTO> messageDTOList = new ArrayList<>();
+            List<Message> messageList = new ArrayList<>();
 
+            messageList.addAll(messageRepository.getConversationFor(idSender, idReceiver, limit, startBound));
+
+
+            for (Message message : messageList) {
+                messageDTOList.add(messageMapper.mapToMessageRestDTO(message));
+            }
+
+
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 201));
+            return new ResponseEntity<>(messageDTOList,httpHeaders,HttpStatus.OK);
+
+        } catch (MessagesNotFoundException e) {
+
+            e.printStackTrace();
+            httpHeaders.set("Error-message", e.getMessage());
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
+        }
+        return new ResponseEntity<>(httpHeaders,HttpStatus.CONFLICT);
+    }
 
 }

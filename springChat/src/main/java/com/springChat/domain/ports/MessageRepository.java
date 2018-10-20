@@ -23,5 +23,6 @@ public interface MessageRepository {
     List<Message> listMessagesInDate(String dateTime);
     List<Message> listMessagesSender(Long idUser);
     List<Message> listMessagesReceived(Long idUser);
-    List<Message> listMessagesBy(Long idSender, Long idReceiver, int startBound, int toBound);
+    List<Message> listMessagesBy(Long idSender, Long idReceiver, int limit, int startBound);
+    List<Message> getConversationFor(Long idSender, Long idReceiver, int limit, int startBound);
 }

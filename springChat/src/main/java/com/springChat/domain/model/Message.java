@@ -61,5 +61,16 @@ public class Message {
     public void setIdReceiver(Long idReceiver) {
         this.idReceiver = idReceiver;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", sentDate=" + sentDate +
+                ", idSender=" + idSender +
+                ", idReceiver=" + idReceiver +
+                '}';
+    }
 }
 
