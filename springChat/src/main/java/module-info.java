@@ -10,6 +10,8 @@ open module chat {
     requires java.sql;
     requires tomcat.embed.core;
     requires spring.jdbc;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
 
     requires authenticateService;
     requires userRepository;

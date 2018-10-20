@@ -1,7 +1,6 @@
 package com.springChat.application.services.socket;
 
 
-import com.springChat.application.services.socket.WebSocket;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -18,7 +17,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     }
 
     @Bean
-    public WebSocket socketHandler(){
-        return new WebSocket();
+    public WebSocket socketHandler() {
+        return WebSocket.configure();
     }
 }
