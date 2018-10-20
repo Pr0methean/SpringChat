@@ -61,6 +61,39 @@ public class Message {
     public void setIdReceiver(Long idReceiver) {
         this.idReceiver = idReceiver;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+
+        if (content != null ? !content.equals(message.content) : message.content != null) return false;
+        if (idSender != null ? !idSender.equals(message.idSender) : message.idSender != null) return false;
+        return idReceiver != null ? idReceiver.equals(message.idReceiver) : message.idReceiver == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = content != null ? content.hashCode() : 0;
+        result = 31 * result + (sentDate != null ? sentDate.hashCode() : 0);
+        result = 31 * result + (idSender != null ? idSender.hashCode() : 0);
+        result = 31 * result + (idReceiver != null ? idReceiver.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", sentDate=" + sentDate +
+                ", idSender=" + idSender +
+                ", idReceiver=" + idReceiver +
+                '}';
+    }
 }
 
 
