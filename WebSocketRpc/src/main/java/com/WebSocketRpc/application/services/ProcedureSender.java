@@ -1,5 +1,7 @@
-package com.springChat.application.services.socket.model.procedure;
+package com.WebSocketRpc.application.services;
 
+import com.WebSocketRpc.application.services.s1.ProcedureConverter;
+import com.WebSocketRpc.domain.model.Procedure;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

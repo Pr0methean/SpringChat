@@ -1,6 +1,7 @@
-package com.springChat.application.services.socket;
+package com.springChat.application.services;
 
 
+import com.WebSocketRpc.api.WSR;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -13,11 +14,11 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler( socketHandler() , "/socket");
+        webSocketHandlerRegistry.addHandler( WSR().getHandler() , "/socket");
     }
 
     @Bean
-    public WebSocket socketHandler() {
-        return WebSocket.configure();
+    public WSR WSR() {
+        return new WSR();
     }
 }

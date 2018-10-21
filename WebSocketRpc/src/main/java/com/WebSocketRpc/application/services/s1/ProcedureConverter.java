@@ -1,10 +1,10 @@
-package com.springChat.application.services.socket.model.procedure;
+package com.WebSocketRpc.application.services.s1;
 
+import com.WebSocketRpc.domain.model.Procedure;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.tomcat.jni.Proc;
 
 import java.io.IOException;
 

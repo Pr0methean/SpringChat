@@ -13,6 +13,8 @@ open module chat {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
 
+    requires WebSocketRpc;
+
     requires authenticateService;
     requires userRepository;
     requires spring.hateoas;
