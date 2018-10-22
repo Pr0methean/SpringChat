@@ -10,21 +10,20 @@ import org.junit.jupiter.api.function.Executable;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class TestedDataBase {
+public class MessageTestMySql {
 
 
-    private Logger log = Logger.getLogger(String.valueOf(TestedDataBase.class));
+    private Logger log = Logger.getLogger(String.valueOf(MessageTestMySql.class));
     private DatabaseTestConfig databaseTestConfig;
     private MessageRepositoryMySQL messageRepositoryMySQL;
 
 
-    public TestedDataBase() throws SQLException {
+    public MessageTestMySql() throws SQLException {
         this.databaseTestConfig = new DatabaseTestConfig();
         this.messageRepositoryMySQL = new MessageRepositoryMySQL(databaseTestConfig.getDataSource());
 
