@@ -25,9 +25,9 @@ public interface UserRepository {
      * @return UserDTO for given data: nick adn password if user exist in DB
      * @throws UserNotExistException  when user not exist
      */
-    User fetchUserBy(String nick, String password) throws RepositorySQLException, UserNotExistException;
+    User fetchUserBy(String nick, String password) throws UserPrincipalNotFoundException, RepositorySQLException, UserNotExistException;
     List<User> fetchAllUsers() throws RepositorySQLException;
     void deleteUserBy(int id) throws RepositorySQLException;
     void updateUser(NewUser newUser) throws RepositorySQLException;
-    NewUser fetchNewUserBy(int id) throws UserPrincipalNotFoundException, RepositorySQLException;
+    NewUser fetchNewUserBy(int id) throws RepositorySQLException, UserPrincipalNotFoundException;
 }

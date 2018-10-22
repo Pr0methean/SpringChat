@@ -1,16 +1,17 @@
 package com.testMessageInfrastructure;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Logger;
 
 public class DatabaseTestConfig {
 
-    Logger log = Logger.getLogger(String.valueOf(DatabaseTestConfig.class));
+    private Logger log = LogManager.getLogger(String.valueOf(DatabaseTestConfig.class));
     private DataSource dataSource;
 
     private final String user = "root";
@@ -19,27 +20,7 @@ public class DatabaseTestConfig {
 
         //TODO: add database.propertis
     public DatabaseTestConfig() {
-        //        Properties props = new Properties();
-//        FileInputStream fis = null;
-//        MysqlDataSource mysqlDS = null;
-//        try {
-//            fis = new FileInputStream("com.mysql.jdbc.Driver");
-//            props.load(fis);
-//            mysqlDS = new MysqlDataSource();
-//            mysqlDS.setURL(props.getProperty("jdbc:mysql://51.38.133.76:3306/chattest?verifyServerCertificate=false&useSSL=false&requireSSL=false"));
-//            mysqlDS.setUser(props.getProperty("root"));
-//            mysqlDS.setPassword(props.getProperty("mysqlroot404"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return mysqlDS;
-//        https://www.journaldev.com/2509/java-datasource-jdbc-datasource-example
-//    }
-
-
-        MysqlDataSource mysqlDS = null;
-
-        mysqlDS = new MysqlDataSource();
+       MysqlDataSource mysqlDS = new MysqlDataSource();
         mysqlDS.setURL(url);
         mysqlDS.setUser(user);
         mysqlDS.setPassword(password);
@@ -54,6 +35,7 @@ public class DatabaseTestConfig {
             statement.executeUpdate("DROP TABLE IF EXISTS chattest.messages");
         } catch (SQLException e) {
             e.printStackTrace();
+            log.error(e.toString());
         }
     }
     public void createDefaultsTable() {
@@ -71,6 +53,7 @@ public class DatabaseTestConfig {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            log.error(e.toString());
         }
     }
 

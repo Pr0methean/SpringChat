@@ -49,7 +49,7 @@ public class UserRepositoryFacade {
         return this.userRepository.userExistBy(nick);
     }
 
-    public UserDTO fetchUserBy(String nick, String password) throws UserNotExistException, RepositorySQLException {
+    public UserDTO fetchUserBy(String nick, String password) throws UserNotExistException, RepositorySQLException, UserPrincipalNotFoundException {
         User user = this.userRepository.fetchUserBy(nick, password);
 
         UserDTO userDTO = MapperUser.getUserDto(user);

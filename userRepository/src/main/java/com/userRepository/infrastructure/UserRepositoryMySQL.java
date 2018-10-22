@@ -60,8 +60,12 @@ public class UserRepositoryMySQL implements UserRepository {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 String nick = resultSet.getString("nick");
@@ -82,8 +86,12 @@ public class UserRepositoryMySQL implements UserRepository {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 String nick = resultSet.getString("nick");
@@ -103,8 +111,12 @@ public class UserRepositoryMySQL implements UserRepository {
     public boolean userExistBy(String nick) throws RepositorySQLException {
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick= \"" + nick + "\"");
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick= \"" + nick + "\"");
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE nick=?");
+            preparedStatement.setString(1,nick);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.first()) {
                 return true;
@@ -146,8 +158,12 @@ public class UserRepositoryMySQL implements UserRepository {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            statement.execute("DELETE FROM users WHERE id=\"" + id + "\"");
+//            Statement statement = connection.createStatement();
+//            statement.execute("DELETE FROM users WHERE id=\"" + id + "\"");
+//
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,9 +176,14 @@ public class UserRepositoryMySQL implements UserRepository {
     public void updateUser(NewUser userNew) throws RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
+            String pass = userNew.getPassword();
+            String nick = userNew.getNick();
 
-            Statement statement = connection.createStatement();
-            statement.execute("UPDATE users SET nick=\"" + userNew.getNick() + "\", pass=\"" + userNew.getPassword() + "\" WHERE id=\"" + userNew.getId() + "\"");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `chattest`.`users` SET `nick` = ?, `pass` = ? WHERE (`nick` = ?);");
+            preparedStatement.setString(1,nick);
+            preparedStatement.setString(2,pass);
+            preparedStatement.setString(3,nick);
+            preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();

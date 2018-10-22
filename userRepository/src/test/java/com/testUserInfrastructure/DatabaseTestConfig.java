@@ -20,9 +20,7 @@ public class DatabaseTestConfig {
     //TODO: add database.propertis
     public DatabaseTestConfig() {
 
-        MysqlDataSource mysqlDS = null;
-
-        mysqlDS = new MysqlDataSource();
+        MysqlDataSource mysqlDS = new MysqlDataSource();
         mysqlDS.setURL(url);
         mysqlDS.setUser(user);
         mysqlDS.setPassword(password);
@@ -38,6 +36,7 @@ public class DatabaseTestConfig {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
     public void createDefaultsTable() {
 

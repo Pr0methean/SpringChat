@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{yyyy-MMM-dd HH:mm:ss a } %level %c -%m %n"/>
+
+
+        </Console>
+        <JDBC name="chattest" tablename="app_logs">
+            <ConnectionFactory class="com.testMessageInfrastructure.ConnectionFactory" method="getConnection"/>
+            <Column name="id" pattern="%uid"/>
+            <Column name="entryDate" isEventTimestamp="true"/>
+            <Column name="logger" pattern="%logger"/>
+            <Column name="logLevel" pattern="%level"/>
+            <Column name="message" pattern="%m"/>
+            <Column name="exception" pattern="%throwable"/>
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.testUserInfrastructure" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="chattest"/>
+        </Logger>
+
+        <Root level="trace" additivity="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="chattest"/>
+        </Root>
+    </Loggers>
+</Configuration>

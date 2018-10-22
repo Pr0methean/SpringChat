@@ -1,0 +1,62 @@
+//        https://www.journaldev.com/2509/java-datasource-jdbc-datasource-example
+DateBase properties
+
+CREATE TABLE `chattest`.`messages` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `content` TEXT NULL,
+  `dateSent` DATETIME NULL,
+  `idSender` INT(11) NULL,
+  `idReceiver` INT(11) NULL,
+  PRIMARY KEY (`id`));
+
+  CREATE TABLE `chattest`.`users` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `nick` VARCHAR(45) NOT NULL,
+    `pass` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_polish_ci;
+
+INSERT INTO `chattest`.`users` (`id`, `nick`, `pass`) VALUES ('1', 'Pawel', 'abcd');
+INSERT INTO `chattest`.`users` (`id`, `nick`, `pass`) VALUES ('2', 'Igor', 'abcef');
+INSERT INTO `chattest`.`users` (`id`, `nick`, `pass`) VALUES ('3', 'Marek', 'fsafasf');
+
+
+
+  package com.testUserInfrastructure;
+
+  import com.mysql.cj.jdbc.MysqlDataSource;
+  import org.apache.commons.dbcp2.BasicDataSource;
+
+  import javax.sql.DataSource;
+  import java.sql.Connection;
+  import java.sql.SQLException;
+
+
+  public class ConnectionFactory {
+      private static BasicDataSource dataSource;
+
+      public ConnectionFactory() {
+      }
+
+
+      public static Connection getConnection() throws SQLException {
+          String user = "root";
+          String password = "mysqlroot404";
+          String url = "jdbc:mysql://51.38.133.76:3306/chattest?verifyServerCertificate=false&useSSL=false&requireSSL=false";
+          String driver = "com.mysql.jdbc.Driver";
+
+          if (dataSource == null) {
+              dataSource = new BasicDataSource();
+              dataSource.setUrl(url);
+              dataSource.setDriverClassName(driver);
+              dataSource.setUsername(user);
+              dataSource.setPassword(password);
+          }
+          return dataSource.getConnection();
+
+
+      }
+  }
+
