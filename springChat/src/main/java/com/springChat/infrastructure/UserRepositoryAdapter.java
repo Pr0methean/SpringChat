@@ -54,7 +54,12 @@ public class UserRepositoryAdapter implements UserReposytory {
 
     @Override
     public User fetchUserBy(String nick, String password) throws UserNotExistException, RepositorySQLException {
-        UserDTO userDTO = this.userRepository.fetchUserBy(nick, password);
+        UserDTO userDTO = null;
+        try {
+            userDTO = this.userRepository.fetchUserBy(nick, password);
+        } catch (UserPrincipalNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return this.userMapper.mapToDomainUser(userDTO);
     }
