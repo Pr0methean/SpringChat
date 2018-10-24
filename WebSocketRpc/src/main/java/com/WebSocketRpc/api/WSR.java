@@ -1,6 +1,7 @@
 package com.WebSocketRpc.api;
 
 import com.WebSocketRpc.application.services.WSRWebSocketHandler;
+import com.WebSocketRpc.domain.model.Procedure;
 import com.WebSocketRpc.domain.ports.ProcedureRepository;
 import com.WebSocketRpc.domain.ports.SessionRepository;
 import com.WebSocketRpc.infrastructure.ProcedureRepositoryInMemory;
@@ -9,14 +10,15 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 /**
  *
- * @param <T> procedure Type
+ * @param <LT> Local type
+ * @param <RT> Remote type
  * @param <I> ID type
  */
-public class WSR<T,I> {
+public class WSR<LT,RT,I> {
 
     private TextWebSocketHandler textWebSocketHandler;
-    private ProcedureRepository<T> procedureRepository;
-    private SessionRepository<T,I> sessionRepository;
+    private ProcedureRepository<LT> procedureRepository;
+    private SessionRepository<RT,I> sessionRepository;
 
     public WSR() {
 
@@ -31,15 +33,17 @@ public class WSR<T,I> {
      * @param method  method to execute for WebClient
      * @param <D> ID procedure type
      */
-    public <D> void addProcedure(T procedureType, Class<D> dataType, ProcedureMethod<D> method ){
+    public <D> void addProcedure(LT procedureType, Class<D> dataType, ProcedureMethod<D> method ){
 
+        System.out.println("Add procdure Facade");
+        this.procedureRepository.addProcedure(new Procedure<>(procedureType,method));
     }
 
 //    public <D> void executeRemoteProcedure(T procedureType, Class<D> dataType, D data){
 //
 //    }
 
-    public Session<T,I> findSession(I ID){
+    public Session<RT,I> findSession(I ID){
 
         return null;
     }
@@ -52,7 +56,7 @@ public class WSR<T,I> {
 
     public static void main(String[] args) {
 
-        WSR<String,Integer> WSR = new WSR<>();
+        WSR<String,Integer,Integer> WSR = new WSR<>();
 
         WSR.addProcedure("AUTH",String.class,(id, session) -> {
             session.setID(1);
@@ -60,8 +64,8 @@ public class WSR<T,I> {
 
         WSR.addProcedure("ForwardMessage",String.class,(message, session) -> {
 
-            Session<String, Integer> sesion = WSR.findSession(1);
-            sesion.executeRemoteProcedure("Login",String.class,"Message");
+            Session<Integer, Integer> session1 = WSR.findSession(1);
+            session1.executeRemoteProcedure(1,String.class,"Message");
         });
 
 

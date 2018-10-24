@@ -1,16 +1,16 @@
 package com.WebSocketRpc.domain.ports;
 
 import com.WebSocketRpc.domain.model.Procedure;
-import com.WebSocketRpc.domain.model.Session;
-import org.springframework.web.socket.WebSocketSession;
 
 import java.util.Map;
 
-public interface ProcedureRepository<T> {
+public interface ProcedureRepository<LT> {
 
-    void addProcedure(Procedure<T> procedure);
+    void addProcedure(Procedure<LT> procedure);
 
-    void removeProcedure(T type);
+    void removeProcedure(LT type);
 
-    Procedure<T> getProcedure(T type);
+    Procedure<LT> getProcedure(LT type);
+    Map<LT, Procedure<LT>> getProcedureMap();
+
 }

@@ -1,6 +1,7 @@
 package com.WebSocketRpc.domain.model;
 
 
+import com.WebSocketRpc.api.ProcedureDTO;
 import com.WebSocketRpc.application.services.ProcedureDTOConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.socket.TextMessage;
@@ -9,9 +10,9 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public class Session<T, I> implements com.WebSocketRpc.api.Session<T, I> {
+public class Session<RT, I> implements com.WebSocketRpc.api.Session<RT, I> {
 
-    private ProcedureDTOConverter<T> procedureDTOConverter;
+    private ProcedureDTOConverter<RT> procedureDTOConverter;
     private WebSocketSession webSocketSession;
     private I ID;
 
@@ -40,9 +41,9 @@ public class Session<T, I> implements com.WebSocketRpc.api.Session<T, I> {
     }
 
     @Override
-    public <D> void executeRemoteProcedure(T procedureType, Class<D> dataType, D data) {
+    public <D> void executeRemoteProcedure(RT procedureType, Class<D> dataType, D data) {
 
-        ProcedureDTO<T, D> procedureDTO = new ProcedureDTO<>(procedureType, data);
+        ProcedureDTO<RT, D> procedureDTO = new ProcedureDTO<>(procedureType, data);
         try {
             String jsonString = procedureDTOConverter.toJsonString(procedureDTO);
             TextMessage textMessage = new TextMessage(jsonString.getBytes(Charset.forName("UTF-8")));

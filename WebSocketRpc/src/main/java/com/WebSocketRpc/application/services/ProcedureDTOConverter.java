@@ -1,6 +1,6 @@
 package com.WebSocketRpc.application.services;
 
-import com.WebSocketRpc.domain.model.ProcedureDTO;
+import com.WebSocketRpc.api.ProcedureDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
-public class ProcedureDTOConverter<T> {
+public class ProcedureDTOConverter<LT> {
 
     private ObjectMapper mapper;
 
@@ -22,7 +22,7 @@ public class ProcedureDTOConverter<T> {
     public String toJsonString(ProcedureDTO procedure) throws JsonProcessingException {
         return this.mapper.writeValueAsString(procedure);
     }
-    public ProcedureDTO<T,?> toProcedureDTO(String json) throws IOException {
+    public ProcedureDTO<LT,?> toProcedureDTO(String json) throws IOException {
         return this.mapper.readValue(json,ProcedureDTO.class);
     }
 

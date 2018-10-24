@@ -5,16 +5,16 @@ import org.springframework.web.socket.WebSocketSession;
 
 /**
  *
- * @param <T>
- * @param <I>
+ * @param <RT> Remote type
+ * @param <I> ID type
  */
-public interface SessionRepository<T,I> {
+public interface SessionRepository<RT,I> {
 
-    void addSession(Session<T,I> session);
+    void addSession(Session<RT,I> session);
 
-    Session<T,I> getSession(I Id);
+    Session<RT,I> getSession(I Id);
 
-    Session<T,I> getSession(WebSocketSession session);
+    Session<RT,I> getSession(WebSocketSession session);
 
     void removeSession(WebSocketSession session);
 }
