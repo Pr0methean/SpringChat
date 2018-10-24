@@ -1,29 +1,16 @@
 package com.WebSocketRpc.domain.model;
 
-public class Procedure<T,D> {
+import com.WebSocketRpc.api.ProcedureMethod;
+
+public class Procedure<T> {
     T procedureType;
-    D data;
-
-    public Procedure() {
-    }
-
-    public Procedure(T procedureType) {
-        this.procedureType = procedureType;
-    }
+    ProcedureMethod method;
 
     public T getProcedureType() {
         return procedureType;
     }
 
-    public void setProcedureType(T procedureType) {
-        this.procedureType = procedureType;
-    }
-
-    public D getData() {
-        return data;
-    }
-
-    public void setData(D data) {
-        this.data = data;
+    public ProcedureMethod getMethod() {
+        return method;
     }
 }

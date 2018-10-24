@@ -1,31 +1,27 @@
-//package com.WebSocketRpc.application.services;
-//
-//
-//
-//import com.WebSocketRpc.domain.model.Session;
-//
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//public class ProcedureExecutor {
-//
-//    private Map<Object, ProcedureMethod> procedureMap;
-//
-//    public ProcedureExecutor() {
-//        this.procedureMap = new HashMap<>();
-//    }
-//
-//    public void execute(Object typ, Object data, Session session) {
-//        ProcedureMethod procedureToExec = this.procedureMap.get(typ);
-//
-//        if (procedureToExec != null){
-//            procedureToExec.execute(data,session);
-//        }else{
-//            throw new RuntimeException("Procedure not exist");
-//        }
-//    }
-//
-//    public <T> void add(Object typ, Class<T> dataType, ProcedureMethod<T> procedure){
-//        this.procedureMap.put(typ,procedure);
-//    }
-//}
+package com.WebSocketRpc.application.services;
+
+import com.WebSocketRpc.domain.model.Procedure;
+import com.WebSocketRpc.domain.model.ProcedureDTO;
+import com.WebSocketRpc.domain.model.Session;
+import com.WebSocketRpc.domain.ports.ProcedureRepository;
+
+public class ProcedureExecutor<T> {
+
+    public static ProcedureExecutor configure(ProcedureRepository procedureRepository){
+        return new ProcedureExecutor(procedureRepository);
+    }
+
+    private ProcedureRepository<T> procedureRepository;
+
+    private ProcedureExecutor(ProcedureRepository procedureRepository) {
+        this.procedureRepository = procedureRepository;
+
+    }
+
+    public <I> void execute(ProcedureDTO<T,?> procedureDTO, Session<T,I> session){
+
+        Procedure<T> procedure = procedureRepository.getProcedure(procedureDTO.getProcedureType());
+        procedure.getMethod().execute(procedureDTO.getData(),session);
+
+    }
+}

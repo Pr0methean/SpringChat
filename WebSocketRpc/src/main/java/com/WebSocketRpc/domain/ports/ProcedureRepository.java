@@ -4,11 +4,13 @@ import com.WebSocketRpc.domain.model.Procedure;
 import com.WebSocketRpc.domain.model.Session;
 import org.springframework.web.socket.WebSocketSession;
 
-public interface ProcedureRepository<T,D> {
+import java.util.Map;
 
-    void addProcedure(T type, D data);
+public interface ProcedureRepository<T> {
+
+    void addProcedure(Procedure<T> procedure);
 
     void removeProcedure(T type);
 
-    Procedure<T,D> getProcedure(T type);
+    Procedure<T> getProcedure(T type);
 }

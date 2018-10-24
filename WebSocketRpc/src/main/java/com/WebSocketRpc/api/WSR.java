@@ -1,6 +1,10 @@
 package com.WebSocketRpc.api;
 
-import com.WebSocketRpc.application.services.s1.WSRWebSocketHandler;
+import com.WebSocketRpc.application.services.WSRWebSocketHandler;
+import com.WebSocketRpc.domain.ports.ProcedureRepository;
+import com.WebSocketRpc.domain.ports.SessionRepository;
+import com.WebSocketRpc.infrastructure.ProcedureRepositoryInMemory;
+import com.WebSocketRpc.infrastructure.SessionRepositoryInMemory;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 /**
@@ -11,13 +15,15 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class WSR<T,I> {
 
     private TextWebSocketHandler textWebSocketHandler;
+    private ProcedureRepository<T> procedureRepository;
+    private SessionRepository<T,I> sessionRepository;
 
     public WSR() {
 
-        this.textWebSocketHandler = new WSRWebSocketHandler();
-
+        this.procedureRepository = new ProcedureRepositoryInMemory<>();
+        this.sessionRepository = new SessionRepositoryInMemory<>();
+        this.textWebSocketHandler = WSRWebSocketHandler.configure(sessionRepository,procedureRepository);
     }
-
     /**
      *
      * @param procedureType ID of procedure
@@ -29,9 +35,9 @@ public class WSR<T,I> {
 
     }
 
-    public <D> void executeRemoteProcedure(T procedureType, Class<D> dataType, D data){
-
-    }
+//    public <D> void executeRemoteProcedure(T procedureType, Class<D> dataType, D data){
+//
+//    }
 
     public Session<T,I> findSession(I ID){
 
