@@ -28,7 +28,7 @@ public class MessageRepositoryFacade {
     }
 
     public void saveMessage(MessageDTOout messageToSave) {
-        Message message = MapperMessage.returnMessage(messageToSave);
+        Message message = MapperMessage.getMessageDomain(messageToSave);
         messageRepositoryMySQL.saveMessage(message);
     }
 
@@ -39,7 +39,7 @@ public class MessageRepositoryFacade {
 
 
     public void updateMessageBy(MessageDTOout messageDTOout) {
-        Message message = MapperMessage.returnMessage(messageDTOout);
+        Message message = MapperMessage.getMessageDomain(messageDTOout);
         messageRepositoryMySQL.updateMessageBy(message);
     }
 
@@ -47,7 +47,7 @@ public class MessageRepositoryFacade {
     public MessageDTOout fetchMessageBy(Long id) {
         Message message = messageRepositoryMySQL.fetchMessageBy(id);
 
-        return MapperMessage.returnMessageDTOout(message);
+        return MapperMessage.getMessageDTO(message);
     }
 
 
@@ -57,7 +57,7 @@ public class MessageRepositoryFacade {
         List<MessageDTOout> messageDTOoutList = new ArrayList<>();
 
         for (Message message : messageList) {
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
             messageDTOoutList.add(messageDTOout);
         }
         return messageDTOoutList;
@@ -70,7 +70,7 @@ public class MessageRepositoryFacade {
         List<MessageDTOout> messageDTOoutList = new ArrayList<>();
 
         for (Message message : messageList) {
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
             messageDTOoutList.add(messageDTOout);
         }
         return messageDTOoutList;
@@ -83,7 +83,7 @@ public class MessageRepositoryFacade {
         List<MessageDTOout> messageDTOoutList = new ArrayList<>();
 
         for (Message message : messageList) {
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
 
             messageDTOoutList.add(messageDTOout);
         }
@@ -98,7 +98,7 @@ public class MessageRepositoryFacade {
         List<MessageDTOout> messageDTOoutList = new ArrayList<>();
 
         for (Message message: messageList) {
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
             messageDTOoutList.add(messageDTOout);
 
         }
@@ -112,7 +112,7 @@ public class MessageRepositoryFacade {
         List<MessageDTOout> messageDTOoutList = new ArrayList<>();
 
         for (Message message: messageList) {
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
 
             messageDTOoutList.add(messageDTOout);
         }
@@ -126,7 +126,7 @@ public class MessageRepositoryFacade {
 
         for (Message message : messageList) {
 
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
             messageDTOoutList.add(messageDTOout);
         }
 
@@ -139,7 +139,7 @@ public class MessageRepositoryFacade {
 
         for (Message message : messageList) {
 
-            MessageDTOout messageDTOout = MapperMessage.returnMessageDTOout(message);
+            MessageDTOout messageDTOout = MapperMessage.getMessageDTO(message);
             messageDTOoutList.add(messageDTOout);
         }
         return messageDTOoutList;

@@ -10,6 +10,10 @@ public class NewUser {
         this.nick =nick;
         this.password = password;
     }
+    public NewUser(String nick, String password){
+        this.nick = nick;
+        this.password = password;
+    }
 
 
     public int getId() {

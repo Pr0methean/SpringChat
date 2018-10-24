@@ -12,6 +12,7 @@ open module chat {
     requires spring.jdbc;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires java.naming;
 
     requires WebSocketRpc;
 

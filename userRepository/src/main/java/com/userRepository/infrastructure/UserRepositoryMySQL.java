@@ -1,11 +1,10 @@
 package com.userRepository.infrastructure;
 
 
-import com.userRepository.applications.dto.NewUserDTO;
-import com.userRepository.applications.dto.UserDTO;
 import com.userRepository.applications.exceptions.ErrorDuringSaveUserException;
 import com.userRepository.applications.exceptions.RepositorySQLException;
 import com.userRepository.applications.exceptions.UserNotExistException;
+import com.userRepository.domain.model.NewUser;
 import com.userRepository.domain.model.User;
 import com.userRepository.domain.ports.UserRepository;
 
@@ -28,7 +27,7 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public int saveUser(NewUserDTO userNew) throws ErrorDuringSaveUserException, RepositorySQLException {
+    public int saveUser(NewUser userNew) throws ErrorDuringSaveUserException, RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
@@ -57,16 +56,20 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public UserDTO fetchUserBy(int id) throws UserNotExistException, RepositorySQLException {
+    public User fetchUserBy(int id) throws UserNotExistException, RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 String nick = resultSet.getString("nick");
-                return new UserDTO(id, nick);
+                return new User(id, nick);
             }
 
 
@@ -79,17 +82,21 @@ public class UserRepositoryMySQL implements UserRepository {
 
 
     @Override
-    public NewUserDTO fetchNewUserBy(int id) throws UserPrincipalNotFoundException, RepositorySQLException {
+    public NewUser fetchNewUserBy(int id) throws UserPrincipalNotFoundException, RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 String nick = resultSet.getString("nick");
                 String pass = resultSet.getString("pass");
-                return new NewUserDTO(id, nick, pass);
+                return new NewUser(id, nick, pass);
             }
 
 
@@ -104,8 +111,12 @@ public class UserRepositoryMySQL implements UserRepository {
     public boolean userExistBy(String nick) throws RepositorySQLException {
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick= \"" + nick + "\"");
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick= \"" + nick + "\"");
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE nick=?");
+            preparedStatement.setString(1,nick);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.first()) {
                 return true;
@@ -119,36 +130,12 @@ public class UserRepositoryMySQL implements UserRepository {
         }
     }
 
-//    @Override
-//    public UserDTO fetchUserBy(String nick, String password) throws RepositorySQLException, UserNotExistException {
-//        try (Connection connection = this.dataSource.getConnection()) {
-//
-//            Statement statement = connection.createStatement();
-//
-//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\"" + nick + "\"" + " AND " + "pass=" + "\"" + password + "\"");
-//            if (resultSet.next()) {
-//
-//                int id = resultSet.getInt("id");
-//                return new UserDTO(id, nick);
-//
-//            }else {
-//                throw new UserNotExistException("Not Find user");
-//            }
-//
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new RepositorySQLException("Select Query Error: "+e.getMessage());
-//        }
-//
-//    }
-
     @Override
-    public List<UserDTO> fetchAllUsers() throws RepositorySQLException {
+    public List<User> fetchAllUsers() throws RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            List<UserDTO> users = new ArrayList<>();
+            List<User> users = new ArrayList<>();
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
@@ -156,7 +143,7 @@ public class UserRepositoryMySQL implements UserRepository {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String nick = resultSet.getString("nick");
-                users.add(new UserDTO(id, nick));
+                users.add(new User(id, nick));
             }
 
             return users;
@@ -171,8 +158,12 @@ public class UserRepositoryMySQL implements UserRepository {
 
         try (Connection connection = this.dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            statement.execute("DELETE FROM users WHERE id=\"" + id + "\"");
+//            Statement statement = connection.createStatement();
+//            statement.execute("DELETE FROM users WHERE id=\"" + id + "\"");
+//
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,12 +173,17 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public void updateUser(NewUserDTO userNew) throws RepositorySQLException {
+    public void updateUser(NewUser userNew) throws RepositorySQLException {
 
         try (Connection connection = this.dataSource.getConnection()) {
+            String pass = userNew.getPassword();
+            String nick = userNew.getNick();
 
-            Statement statement = connection.createStatement();
-            statement.execute("UPDATE users SET nick=\"" + userNew.getNick() + "\", pass=\"" + userNew.getPassword() + "\" WHERE id=\"" + userNew.getId() + "\"");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `chattest`.`users` SET `nick` = ?, `pass` = ? WHERE (`nick` = ?);");
+            preparedStatement.setString(1,nick);
+            preparedStatement.setString(2,pass);
+            preparedStatement.setString(3,nick);
+            preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -196,8 +192,9 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public UserDTO fetchUserBy(String nick, String password) throws UserNotExistException {
+    public User fetchUserBy(String nick, String password) throws UserNotExistException {
 
+        //todo: Thing about JDBC Template
 //        JdbcTemplate jdbcTemplate = new JdbcTemplate();
 //        jdbcTemplate.setDataSource(dataSource);
 //        String sql = "SELECT * FROM users WHERE nick= ? AND pass = ?";
@@ -212,13 +209,9 @@ public class UserRepositoryMySQL implements UserRepository {
             preparedStatement.setString(2,password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-
-//            Statement statement = connection.createStatement();
-//
-//            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE nick=" + "\"" + nick + "\"" + " AND " + "pass=" + "\"" + password + "\"");
             resultSet.next();
             int id = resultSet.getInt("id");
-            return new UserDTO(id, nick);
+            return new User(id, nick);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new UserNotExistException("Incorrect user or password");
