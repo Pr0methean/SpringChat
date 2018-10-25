@@ -18,6 +18,14 @@ public class SessionRepositoryInMemory<RT, I> implements SessionRepository<RT, I
         allSessionMap = new TreeMap<>();
     }
 
+    public Map<I, Session<RT, I>> getAuthorizedSessionMap() {
+        return authorizedSessionMap;
+    }
+
+    public Map<String, Session<RT, I>> getAllSessionMap() {
+        return allSessionMap;
+    }
+
     @Override
     public void addSession(Session<RT, I> session) {
 

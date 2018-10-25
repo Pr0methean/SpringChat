@@ -39,9 +39,6 @@ public class WSR<LT,RT,I> {
         this.procedureRepository.addProcedure(new Procedure<>(procedureType,method));
     }
 
-//    public <D> void executeRemoteProcedure(T procedureType, Class<D> dataType, D data){
-//
-//    }
 
     public Session<RT,I> findSession(I ID){
 
