@@ -42,7 +42,7 @@ public class SessionRepositoryInMemory<RT, I> implements SessionRepository<RT, I
     @Override
     public Session<RT, I> getSession(WebSocketSession webSocketSession) {
         if (allSessionMap.containsKey(webSocketSession.getId())) {
-            return authorizedSessionMap.get(webSocketSession.getId());
+            return allSessionMap.get(webSocketSession.getId());
         } else {
             throw new SessionNotExist("Session no exist in Repository");
         }
