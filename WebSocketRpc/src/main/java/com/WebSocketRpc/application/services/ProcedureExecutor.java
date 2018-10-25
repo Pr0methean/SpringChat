@@ -19,15 +19,14 @@ public class ProcedureExecutor<LT,RT> {
     }
 
     public <I> void execute(ProcedureDTO<LT,?> procedureDTO, Session<RT,I> session){
-        System.out.println(procedureDTO.getData());
-        System.out.println(procedureDTO.getType());
-        System.out.println(procedureRepository);
-        Procedure<LT> procedure = procedureRepository.getProcedure(procedureDTO.getType());
 
+        try{
+            Procedure<LT> procedure = procedureRepository.getProcedure(procedureDTO.getType());
+            procedure.getMethod().execute(procedureDTO.getData(),session);
 
-        System.out.println("From Repo");
-        System.out.println(procedure.getProcedureType());
-        procedure.getMethod().execute(procedureDTO.getData(),session);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }

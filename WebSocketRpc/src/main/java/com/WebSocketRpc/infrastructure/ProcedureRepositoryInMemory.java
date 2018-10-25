@@ -17,8 +17,6 @@ public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> 
 
     @Override
     public void addProcedure(Procedure<LT> procedure) {
-        System.out.println("Add Procedure");
-        System.out.println(procedure.getProcedureType());
         procedureMap.put(procedure.getProcedureType(),procedure);
     }
 
