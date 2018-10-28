@@ -32,7 +32,7 @@ public class WSRWebSocketHandler<LT, RT, I> extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) {
-        sessionRepository.addSession(new Session<>(webSocketSession, procedureDTOConverter));
+        sessionRepository.addSession(new Session<>(webSocketSession, procedureDTOConverter,sessionRepository));
     }
 
     @Override

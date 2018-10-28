@@ -3,6 +3,8 @@ package com.WebSocketRpc.domain.model;
 
 import com.WebSocketRpc.api.ProcedureDTO;
 import com.WebSocketRpc.application.services.ProcedureDTOConverter;
+import com.WebSocketRpc.domain.ports.ProcedureRepository;
+import com.WebSocketRpc.domain.ports.SessionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -13,12 +15,14 @@ import java.nio.charset.Charset;
 public class Session<RT, I> implements com.WebSocketRpc.api.Session<RT, I> {
 
     private ProcedureDTOConverter<RT> procedureDTOConverter;
+    private SessionRepository<RT, I> sessionRepository;
     private WebSocketSession webSocketSession;
     private I ID;
 
-    public Session(WebSocketSession webSocketSession, ProcedureDTOConverter procedureDTOConverter) {
+    public Session(WebSocketSession webSocketSession, ProcedureDTOConverter procedureDTOConverter, SessionRepository sessionRepository) {
         this.webSocketSession = webSocketSession;
         this.procedureDTOConverter = procedureDTOConverter;
+        this.sessionRepository = sessionRepository;
     }
 
     public WebSocketSession getWebSocketSession() {
@@ -33,6 +37,7 @@ public class Session<RT, I> implements com.WebSocketRpc.api.Session<RT, I> {
     @Override
     public void setID(I id) {
         this.ID = id;
+        this.sessionRepository.addSession(this);
     }
 
     @Override
