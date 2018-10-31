@@ -25,6 +25,7 @@ public class ProcedureExecutor<LT,RT> {
             procedure.getMethod().execute(procedureDTO.getData(),session);
 
         }catch (Exception e){
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 

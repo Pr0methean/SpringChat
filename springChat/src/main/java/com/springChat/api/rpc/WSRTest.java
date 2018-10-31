@@ -16,7 +16,7 @@ public class WSRTest {
 
         wsr.addProcedure("RMTEST",String.class,(data, session) -> {
 
-            System.out.println("WSR: "+data);
+            System.out.println("wsr: "+data);
             session.executeRemoteProcedure("TEST",String.class,"Message from server");
         });
 

@@ -3,7 +3,6 @@ package com.WebSocketRpc.domain.model;
 
 import com.WebSocketRpc.api.ProcedureDTO;
 import com.WebSocketRpc.application.services.ProcedureDTOConverter;
-import com.WebSocketRpc.domain.ports.ProcedureRepository;
 import com.WebSocketRpc.domain.ports.SessionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.socket.TextMessage;
@@ -17,7 +16,7 @@ public class Session<RT, I> implements com.WebSocketRpc.api.Session<RT, I> {
     private ProcedureDTOConverter<RT> procedureDTOConverter;
     private SessionRepository<RT, I> sessionRepository;
     private WebSocketSession webSocketSession;
-    private I ID;
+    private I id;
 
     public Session(WebSocketSession webSocketSession, ProcedureDTOConverter procedureDTOConverter, SessionRepository sessionRepository) {
         this.webSocketSession = webSocketSession;
@@ -30,19 +29,19 @@ public class Session<RT, I> implements com.WebSocketRpc.api.Session<RT, I> {
     }
 
     @Override
-    public I getID() {
-        return ID;
+    public I getId() {
+        return id;
     }
 
     @Override
-    public void setID(I id) {
-        this.ID = id;
+    public void setId(I id) {
+        this.id = id;
         this.sessionRepository.addSession(this);
     }
 
     @Override
-    public boolean hasID() {
-        return (this.ID != null);
+    public boolean hasId() {
+        return (this.id != null);
     }
 
     @Override

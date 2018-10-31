@@ -33,38 +33,18 @@ public class WSR<LT,RT,I> {
      * @param method  method to execute for WebClient
      * @param <D> ID procedure type
      */
-    public <D> void addProcedure(LT procedureType, Class<D> dataType, ProcedureMethod<D> method ){
+    public <D> void addProcedure(LT procedureType, Class<D> dataType, ProcedureMethod<RT,I,D> method ){
 
         System.out.println("Add procdure Facade");
         this.procedureRepository.addProcedure(new Procedure<>(procedureType,method));
     }
 
-
-    public Session<RT,I> findSession(I ID){
-
-        return null;
+    public Session<RT,I> findSession(I id){
+        return this.sessionRepository.getSession(id);
     }
 
     public TextWebSocketHandler getHandler(){
         return this.textWebSocketHandler;
     }
 
-
-
-    public static void main(String[] args) {
-
-        WSR<String,Integer,Integer> WSR = new WSR<>();
-
-        WSR.addProcedure("AUTH",String.class,(id, session) -> {
-            session.setID(1);
-        });
-
-        WSR.addProcedure("ForwardMessage",String.class,(message, session) -> {
-
-            Session<Integer, Integer> session1 = WSR.findSession(1);
-            session1.executeRemoteProcedure(1,String.class,"Message");
-        });
-
-
-    }
 }

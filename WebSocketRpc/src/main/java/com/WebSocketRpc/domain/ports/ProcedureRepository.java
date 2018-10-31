@@ -11,6 +11,5 @@ public interface ProcedureRepository<LT> {
     void removeProcedure(LT type);
 
     Procedure<LT> getProcedure(LT type);
-    Map<LT, Procedure<LT>> getProcedureMap();
 
 }

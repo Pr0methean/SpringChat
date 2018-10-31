@@ -25,19 +25,4 @@ public class ProcedureRepositoryInMemoryTest<LT> {
 
 
     }
-
-
-    public void removeProcedure(Object type) {
-
-    }
-
-
-    public Procedure getProcedure(Object type) {
-        return null;
-    }
-
-
-    public Map getProcedureMap() {
-        return null;
-    }
 }

@@ -4,20 +4,21 @@ import com.WebSocketRpc.domain.model.Procedure;
 import com.WebSocketRpc.domain.ports.ProcedureNotExist;
 import com.WebSocketRpc.domain.ports.ProcedureRepository;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> {
 
-    private Map<LT,Procedure<LT>> procedureMap;
+    private Map<String,Procedure<LT>> procedureMap;
 
     public ProcedureRepositoryInMemory() {
-        procedureMap = new TreeMap<>();
+        procedureMap = new HashMap<>();
     }
 
     @Override
     public void addProcedure(Procedure<LT> procedure) {
-        procedureMap.put(procedure.getProcedureType(),procedure);
+        procedureMap.put(procedure.getProcedureType().toString(),procedure);
     }
 
     @Override
@@ -34,11 +35,7 @@ public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> 
         if (procedureMap.containsKey(type)){
             return procedureMap.get(type);
         }else {
-            throw new ProcedureNotExist("Procedure not Exist in Repository");
+            throw new ProcedureNotExist("Procedure not Exist in Repository. Type: "+type);
         }
-    }
-
-    public Map<LT, Procedure<LT>> getProcedureMap() {
-        return procedureMap;
     }
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.web.socket.WebSocketSession;
 
-public class SessionRepositoryInMemotyTest {
+public class SessionRepositoryInMemoryTest {
 
 
     @Test
@@ -24,23 +24,11 @@ public class SessionRepositoryInMemotyTest {
         sessionRepository.addSession(session);
 
         //when
-        session.setID("ID");
+        session.setId("ID");
         Session sessionWithID = sessionRepository.getSession("ID");
 
         //then
         Assert.assertEquals(session,sessionWithID);
-
-    }
-
-    public Session getSession(Object Id) {
-        return null;
-    }
-
-    public Session getSession(WebSocketSession session) {
-        return null;
-    }
-
-    public void removeSession(WebSocketSession session) {
 
     }
 }

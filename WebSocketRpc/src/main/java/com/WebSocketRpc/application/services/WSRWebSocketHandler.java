@@ -34,7 +34,6 @@ public class WSRWebSocketHandler<LT, RT, I> extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession webSocketSession) {
         sessionRepository.addSession(new Session<>(webSocketSession, procedureDTOConverter,sessionRepository));
     }
-
     @Override
     public void handleTextMessage(WebSocketSession webSocketSession, TextMessage json) throws IOException {
 
@@ -44,7 +43,6 @@ public class WSRWebSocketHandler<LT, RT, I> extends TextWebSocketHandler {
             procedureExecutor.execute(procedureDTO, session);
 
         } catch (Exception e) {
-
             System.out.println("Error " + e.getMessage());
         }
 

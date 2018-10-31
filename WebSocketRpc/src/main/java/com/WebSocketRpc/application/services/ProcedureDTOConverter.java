@@ -22,8 +22,15 @@ public class ProcedureDTOConverter<LT> {
     public String toJsonString(ProcedureDTO procedure) throws JsonProcessingException {
         return this.mapper.writeValueAsString(procedure);
     }
-    public ProcedureDTO<LT,?> toProcedureDTO(String json) throws IOException {
+    public ProcedureDTO<LT,?> toProcedureDTO(String json ) throws IOException {
+
+        String hello = " dfddd";
+
+        Class<? extends String> aClass = hello.getClass();
+
+        // TODO: 31.10.2018 Error during parsing dto
         return this.mapper.readValue(json,ProcedureDTO.class);
+
     }
 
 }
