@@ -8,7 +8,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class SessionRepositoryInMemory<RT, I> implements SessionRepository<RT, I> {
+public class SessionRepositoryInMemory<RT extends Enum<RT>, I extends Comparable<I>> implements SessionRepository<RT, I> {
 
     private Map<I, Session<RT, I>> authorizedSessionMap;
     private Map<String, Session<RT, I>> allSessionMap;
@@ -28,6 +28,7 @@ public class SessionRepositoryInMemory<RT, I> implements SessionRepository<RT, I
 
     @Override
     public void addSession(Session<RT, I> session) {
+
 
         if (session.hasId()) {
             authorizedSessionMap.put(session.getId(), session);

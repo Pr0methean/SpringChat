@@ -11,12 +11,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
-public class ProcedureDTOConverter<LT> {
+public class ProcedureDTOConverter<LT extends Enum<LT>> {
 
     private ObjectMapper mapper;
     private ProcedureRepository<LT> procedureRepository;
+    private Class<LT> localType;
 
-    public ProcedureDTOConverter(ProcedureRepository<LT> procedureRepository) {
+    public ProcedureDTOConverter(ProcedureRepository<LT> procedureRepository, Class<LT> localType) {
+        this.localType = localType;
         this.procedureRepository = procedureRepository;
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -24,34 +26,33 @@ public class ProcedureDTOConverter<LT> {
         this.mapper = mapper;
     }
 
-    public String toJsonString(ProcedureDTO procedure) throws JsonProcessingException {
+    public String toJsonString(ProcedureDTO<LT,?> procedure) throws JsonProcessingException {
 
         final Object data = procedure.getData();
-        final Object type = procedure.getType();
+        final LT type = procedure.getType();
+
         final String dataJson = this.mapper.writeValueAsString(data);
-        final String typeJson = this.mapper.writeValueAsString(type);
+
         final NewProcedureDTO newProcedureDTO = new NewProcedureDTO();
         newProcedureDTO.setDataJson(dataJson);
-        newProcedureDTO.setTypeJson(typeJson);
+        newProcedureDTO.setNameOfProcedure(type.name());
         return this.mapper.writeValueAsString(newProcedureDTO);
     }
     public ProcedureDTO<LT,?> toProcedureDTO(String json ) throws IOException {
 
         final NewProcedureDTO newProcedureDTO = this.mapper.readValue(json, NewProcedureDTO.class);
 
-        final String typeProcedureJson = newProcedureDTO.getTypeJson();
+        final String nameOfProcedure = newProcedureDTO.getNameOfProcedure();
+        final LT procedureEnum = LT.valueOf(localType, nameOfProcedure);
         final String dataProcedureJson = newProcedureDTO.getDataJson();
 
-        final LT procedureType = (LT) this.mapper.readValue(typeProcedureJson, this.procedureRepository.getProcedureTypeClass());
-        final Procedure<LT> procedure = this.procedureRepository.getProcedure(procedureType);
 
+        final Procedure<LT> procedure = this.procedureRepository.getProcedure(procedureEnum);
         final Object data = this.mapper.readValue(dataProcedureJson, procedure.getProcedureDataType());
 
         final ProcedureDTO<LT, Object> procedureDTOToRetur = new ProcedureDTO<>();
         procedureDTOToRetur.setData(data);
-        procedureDTOToRetur.setType(procedureType);
-
-        // TODO: 31.10.2018 Error during parsing dto
+        procedureDTOToRetur.setType(procedureEnum);
         return procedureDTOToRetur;
 
     }

@@ -10,12 +10,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-public class WSRWebSocketHandler<LT, RT, I> extends TextWebSocketHandler {
+public class WSRWebSocketHandler<LT extends Enum<LT>, RT extends Enum<RT>, I extends Comparable<I>> extends TextWebSocketHandler {
 
 
-    public static <LT, RT, I> WSRWebSocketHandler<LT, RT, I> configure(SessionRepository<RT, I> sessionRepository, ProcedureRepository<LT> procedureRepository) {
-        ProcedureExecutor procedureExecutor = ProcedureExecutor.configure(procedureRepository);
-        ProcedureDTOConverter procedureDTOConverter = new ProcedureDTOConverter(procedureRepository);
+    public static <LT extends Enum<LT>, RT extends Enum<RT>, I extends Comparable<I>> WSRWebSocketHandler<LT, RT, I> configure(SessionRepository<RT, I> sessionRepository, ProcedureDTOConverter<LT> procedureDTOConverter, ProcedureExecutor<LT,RT> procedureExecutor) {
+
         return new WSRWebSocketHandler<>(sessionRepository, procedureExecutor, procedureDTOConverter);
     }
 
@@ -34,7 +33,7 @@ public class WSRWebSocketHandler<LT, RT, I> extends TextWebSocketHandler {
         sessionRepository.addSession(new Session<>(webSocketSession, procedureDTOConverter,sessionRepository));
     }
     @Override
-    public void handleTextMessage(WebSocketSession webSocketSession, TextMessage json) throws IOException {
+    public void handleTextMessage(WebSocketSession webSocketSession, TextMessage json) {
 
         try {
             ProcedureDTO<LT, ?> procedureDTO = procedureDTOConverter.toProcedureDTO(json.getPayload());

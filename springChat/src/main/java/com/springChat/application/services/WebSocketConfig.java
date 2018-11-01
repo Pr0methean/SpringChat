@@ -2,6 +2,8 @@ package com.springChat.application.services;
 
 
 import com.WebSocketRpc.api.WSR;
+import com.springChat.api.wsr.types.LocalProcedure;
+import com.springChat.api.wsr.types.RemoteProcedure;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -19,6 +21,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public WSR WSR() {
-        return new WSR();
+        return new WSR(LocalProcedure.class,RemoteProcedure.class);
     }
 }

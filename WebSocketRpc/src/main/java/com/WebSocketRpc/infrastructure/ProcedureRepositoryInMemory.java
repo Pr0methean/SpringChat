@@ -6,32 +6,28 @@ import com.WebSocketRpc.domain.ports.ProcedureRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
-public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> {
+public class ProcedureRepositoryInMemory<LT extends Enum<LT>> implements ProcedureRepository<LT> {
 
     private Map<String,Procedure<LT>> procedureMap;
-    private Class<?> procedureTypeClass;
 
-    // TODO: 2018-10-31 Add
-    public Class<?> getProcedureTypeClass() {
-        return procedureTypeClass;
-    }
 
     public ProcedureRepositoryInMemory() {
-        procedureMap = new HashMap<>();
+        procedureMap = new TreeMap<>();
     }
 
     @Override
     public void addProcedure(Procedure<LT> procedure) {
-        this.procedureTypeClass = procedure.getProcedureType().getClass();
-        System.out.println("ADD procedure to repot : "+procedure.getProcedureType().toString());
-        procedureMap.put(procedure.getProcedureType().toString(),procedure);
+        // TODO: 2018-11-01  Remove LOG
+         System.out.println("ADD procedure to repot : "+procedure.getProcedureType().toString());
+        procedureMap.put(procedure.getProcedureType().name(),procedure);
     }
 
     @Override
     public void removeProcedure(LT type) {
-        if (procedureMap.containsKey(type)){
-        procedureMap.remove(type);
+        if (procedureMap.containsKey(type.name())){
+        procedureMap.remove(type.name());
         }else {
             throw new ProcedureNotExist("Procedure not Exist in Repository");
         }
@@ -39,10 +35,10 @@ public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> 
 
     @Override
     public Procedure<LT> getProcedure(LT type) {
-        if (procedureMap.containsKey(type.toString())){
-            return procedureMap.get(type.toString());
+        if (procedureMap.containsKey(type.name())){
+            return procedureMap.get(type.name());
         }else {
-            throw new ProcedureNotExist("Procedure not Exist in Repository. Type: "+type);
+            throw new ProcedureNotExist("Procedure not Exist in Repository. Type: "+type.name());
         }
     }
 }

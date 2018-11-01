@@ -2,7 +2,7 @@ package com.WebSocketRpc.domain.model;
 
 import com.WebSocketRpc.api.ProcedureMethod;
 
-public class Procedure<LT> {
+public class Procedure<LT extends Enum<LT>> {
     LT procedureType;
     ProcedureMethod method;
     Class<?> procedureDataType;

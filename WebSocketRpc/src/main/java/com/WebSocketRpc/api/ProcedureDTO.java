@@ -1,6 +1,6 @@
 package com.WebSocketRpc.api;
 
-public class ProcedureDTO<LT,D> {
+public class ProcedureDTO<LT extends Enum<LT>,D> {
     LT type;
     D data;
 

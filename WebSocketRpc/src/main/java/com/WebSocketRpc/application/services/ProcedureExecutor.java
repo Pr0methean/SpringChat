@@ -5,9 +5,9 @@ import com.WebSocketRpc.api.ProcedureDTO;
 import com.WebSocketRpc.domain.model.Session;
 import com.WebSocketRpc.domain.ports.ProcedureRepository;
 
-public class ProcedureExecutor<LT,RT> {
+public class ProcedureExecutor<LT extends Enum<LT> ,RT extends Enum<RT>> {
 
-    public static ProcedureExecutor configure(ProcedureRepository procedureRepository){
+    public static <LT extends Enum<LT>> ProcedureExecutor configure(ProcedureRepository<LT> procedureRepository){
         return new ProcedureExecutor(procedureRepository);
     }
 

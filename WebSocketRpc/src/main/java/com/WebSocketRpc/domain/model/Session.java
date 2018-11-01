@@ -11,7 +11,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public class Session<RT, I> implements com.WebSocketRpc.api.Session<RT, I> {
+public class Session<RT extends Enum<RT>, I> implements com.WebSocketRpc.api.Session<RT, I> {
 
     private ProcedureDTOConverter<RT> procedureDTOConverter;
     private SessionRepository<RT, I> sessionRepository;

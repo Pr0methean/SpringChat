@@ -13,6 +13,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 @Component
 public class MessageControllerWSR implements InitializingBean {
 
@@ -30,7 +32,7 @@ public class MessageControllerWSR implements InitializingBean {
     public void afterPropertiesSet() {
 
         System.out.println(" WSR Message controller start");
-        wsr.addProcedure(LocalProcedure.SENDMESSAGE, MessageDTO.class,(data, session) -> {
+        wsr.addProcedure(LocalProcedure.FORWARDMESSAGE, MessageDTO.class,(data, session) -> {
 
             if(session.hasId()){
 
@@ -38,21 +40,14 @@ public class MessageControllerWSR implements InitializingBean {
                 message.setContent(data.getContent());
                 message.setIdReceiver(data.getReceiverId());
                 message.setIdSender(session.getId());
+                message.setSentDate(Instant.now());
 
                 messageRepository.saveMessage(message);
 
 
                 try{
                     Session<RemoteProcedure, Long> receiverSession = wsr.findSession(data.getReceiverId());
-
-                    MessageDTO messageDTO = new MessageDTO();
-                    messageDTO.setContent(data.getContent());
-                    messageDTO.setSenderId(session.getId());
-                    messageDTO.setReceiverId(data.getReceiverId());
-
-                    receiverSession.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,messageDTO);
-
-
+                    receiverSession.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,data);
                 }catch (Exception e){
 
 

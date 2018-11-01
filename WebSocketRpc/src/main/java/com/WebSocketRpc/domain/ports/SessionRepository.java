@@ -8,7 +8,7 @@ import org.springframework.web.socket.WebSocketSession;
  * @param <RT> Remote type
  * @param <I> ID type
  */
-public interface SessionRepository<RT,I> {
+public interface SessionRepository<RT extends Enum<RT>,I> {
 
     void addSession(Session<RT,I> session);
 

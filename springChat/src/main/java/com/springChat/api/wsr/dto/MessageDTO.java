@@ -1,19 +1,19 @@
 package com.springChat.api.wsr.dto;
 
 public class MessageDTO {
-    private Long SenderId;
-    private Long ReceiverId;
+    private Long senderId;
+    private Long receiverId;
     private String content;
 
     public MessageDTO() {
     }
 
     public Long getReceiverId() {
-        return ReceiverId;
+        return receiverId;
     }
 
     public void setReceiverId(Long receiverId) {
-        ReceiverId = receiverId;
+        this.receiverId = receiverId;
     }
 
     public String getContent() {
@@ -25,10 +25,10 @@ public class MessageDTO {
     }
 
     public Long getSenderId() {
-        return SenderId;
+        return senderId;
     }
 
     public void setSenderId(Long senderId) {
-        SenderId = senderId;
+        this.senderId = senderId;
     }
 }

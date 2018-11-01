@@ -1,18 +1,18 @@
 package com.WebSocketRpc.api;
 
 public class NewProcedureDTO {
-    private String typeJson;
+    private String nameOfProcedure;
     private String dataJson;
 
     public NewProcedureDTO() {
     }
 
-    public String getTypeJson() {
-        return typeJson;
+    public String getNameOfProcedure() {
+        return nameOfProcedure;
     }
 
-    public void setTypeJson(String typeJson) {
-        this.typeJson = typeJson;
+    public void setNameOfProcedure(String nameOfProcedure) {
+        this.nameOfProcedure = nameOfProcedure;
     }
 
     public String getDataJson() {
