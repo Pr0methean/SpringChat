@@ -6,11 +6,16 @@ import com.WebSocketRpc.domain.ports.ProcedureRepository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> {
 
     private Map<String,Procedure<LT>> procedureMap;
+    private Class<?> procedureTypeClass;
+
+    // TODO: 2018-10-31 Add
+    public Class<?> getProcedureTypeClass() {
+        return procedureTypeClass;
+    }
 
     public ProcedureRepositoryInMemory() {
         procedureMap = new HashMap<>();
@@ -18,6 +23,8 @@ public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> 
 
     @Override
     public void addProcedure(Procedure<LT> procedure) {
+        this.procedureTypeClass = procedure.getProcedureType().getClass();
+        System.out.println("ADD procedure to repot : "+procedure.getProcedureType().toString());
         procedureMap.put(procedure.getProcedureType().toString(),procedure);
     }
 
@@ -32,8 +39,8 @@ public class ProcedureRepositoryInMemory<LT> implements ProcedureRepository<LT> 
 
     @Override
     public Procedure<LT> getProcedure(LT type) {
-        if (procedureMap.containsKey(type)){
-            return procedureMap.get(type);
+        if (procedureMap.containsKey(type.toString())){
+            return procedureMap.get(type.toString());
         }else {
             throw new ProcedureNotExist("Procedure not Exist in Repository. Type: "+type);
         }

@@ -73,6 +73,12 @@ public class MessageControllerWSR implements InitializingBean {
             Long userId = data.getUserId();
             session.setId(userId);
 
+            System.out.println("Authorized User by id: "+data.getUserId());
+            final ErrorDTO errorDTO = new ErrorDTO();
+            errorDTO.setMessage("Authorized succeed");
+            errorDTO.setStatus("OK");
+            session.executeRemoteProcedure(RemoteProcedure.ERROR,ErrorDTO.class,errorDTO);
+
         });
 
     }

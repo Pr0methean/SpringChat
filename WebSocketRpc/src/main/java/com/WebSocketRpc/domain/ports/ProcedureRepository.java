@@ -12,4 +12,6 @@ public interface ProcedureRepository<LT> {
 
     Procedure<LT> getProcedure(LT type);
 
+    public Class<?> getProcedureTypeClass();
+
 }

@@ -6,14 +6,11 @@ import com.WebSocketRpc.api.ProcedureMethod;
 import com.WebSocketRpc.application.services.ProcedureDTOConverter;
 import com.WebSocketRpc.application.services.ProcedureExecutor;
 import com.WebSocketRpc.domain.model.Procedure;
-import com.WebSocketRpc.domain.model.Session;
 import com.WebSocketRpc.infrastructure.ProcedureRepositoryInMemory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.web.socket.WebSocketSession;
-
-import java.lang.reflect.Executable;
 
 public class ProcedureExecutorTest {
 
@@ -30,7 +27,7 @@ public class ProcedureExecutorTest {
 
         ProcedureRepositoryInMemory procedureRepository = new ProcedureRepositoryInMemory();
         ProcedureExecutor procedureExecutor = ProcedureExecutor.configure(procedureRepository);
-        ProcedureDTOConverter procedureDTOConverter = new ProcedureDTOConverter();
+        //ProcedureDTOConverter procedureDTOConverter = new ProcedureDTOConverter();
 
         ProcedureMethod method = (data, session) -> {
 
@@ -40,9 +37,9 @@ public class ProcedureExecutorTest {
         };
 
 
-        Procedure procedure = new Procedure("LOGIN", method);
+        //Procedure procedure = new Procedure("LOGIN", method);
 
-        procedureRepository.getProcedure(procedure);
+        //procedureRepository.getProcedure(procedure);
 
         Procedure login = procedureRepository.getProcedure("LOGIN");
         // TODO: 31.10.2018 Fix this BUG

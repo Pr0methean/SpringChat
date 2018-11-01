@@ -17,10 +17,10 @@ public class ProcedureRepositoryInMemoryTest<LT> {
         //given
         ProcedureRepositoryInMemory procedureRepository = new ProcedureRepositoryInMemory();
 
-        Procedure<String> procedureStart = new Procedure<String>("Login", ((data, session) -> {}));
+       // Procedure<String> procedureStart = new Procedure<String>("Login", ((data, session) -> {}));
 
        //when
-        procedureRepository.addProcedure(procedureStart);
+      //  procedureRepository.addProcedure(procedureStart);
 
         //then
         Procedure fetchProcedure = procedureRepository.getProcedure("Login");

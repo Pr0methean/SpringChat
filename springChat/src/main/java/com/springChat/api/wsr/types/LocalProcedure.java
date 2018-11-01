@@ -1,7 +1,7 @@
 package com.springChat.api.wsr.types;
 
 public enum LocalProcedure {
-    SENDMESSAGE, AUTHSESSION;
+    SENDMESSAGE,  AUTHSESSION;
 
     @Override
     public String toString() {

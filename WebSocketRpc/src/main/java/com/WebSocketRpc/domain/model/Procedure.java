@@ -5,10 +5,16 @@ import com.WebSocketRpc.api.ProcedureMethod;
 public class Procedure<LT> {
     LT procedureType;
     ProcedureMethod method;
+    Class<?> procedureDataType;
 
-    public Procedure(LT procedureType, ProcedureMethod method) {
+    public Procedure(LT procedureType, ProcedureMethod method, Class<?> dataType) {
+        this.procedureDataType = dataType;
         this.procedureType = procedureType;
         this.method = method;
+    }
+
+    public Class<?> getProcedureDataType() {
+        return procedureDataType;
     }
 
     public LT getProcedureType() {

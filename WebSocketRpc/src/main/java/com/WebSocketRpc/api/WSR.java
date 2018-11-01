@@ -14,7 +14,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  * @param <RT> Remote type
  * @param <I> ID type
  */
-public class WSR<LT,RT,I> {
+public class WSR<LT extends Enum<LT>,RT extends Enum<RT>,I extends Comparable<I>> {
 
     private TextWebSocketHandler textWebSocketHandler;
     private ProcedureRepository<LT> procedureRepository;
@@ -35,8 +35,10 @@ public class WSR<LT,RT,I> {
      */
     public <D> void addProcedure(LT procedureType, Class<D> dataType, ProcedureMethod<RT,I,D> method ){
 
+        procedureType.name();
+
         System.out.println("Add procdure Facade");
-        this.procedureRepository.addProcedure(new Procedure<>(procedureType,method));
+        this.procedureRepository.addProcedure(new Procedure<>(procedureType,method,dataType));
     }
 
     public Session<RT,I> findSession(I id){
@@ -45,6 +47,25 @@ public class WSR<LT,RT,I> {
 
     public TextWebSocketHandler getHandler(){
         return this.textWebSocketHandler;
+    }
+
+    public static void main(String[] args) {
+
+
+        final WSR<WSR.LT, WSR.RT, String> WSR = new WSR<>();
+
+        WSR.addProcedure(com.WebSocketRpc.api.WSR.LT.AUTHORIZED,String.class,(data, session) -> {
+
+        });
+
+    }
+
+    public enum LT{
+        AUTHORIZED, FOWARDMESSAGE
+    }
+
+    public enum RT{
+        ADDMESSAGE, ERROR
     }
 
 }
