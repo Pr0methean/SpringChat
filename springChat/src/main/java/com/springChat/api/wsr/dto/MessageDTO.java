@@ -1,11 +1,22 @@
 package com.springChat.api.wsr.dto;
 
+import java.sql.Timestamp;
+
 public class MessageDTO {
     private Long senderId;
     private Long receiverId;
     private String content;
+    private Timestamp sentDate;
 
     public MessageDTO() {
+    }
+
+    public Timestamp getSentDate() {
+        return sentDate;
+    }
+
+    public void setSentDate(Timestamp sentDate) {
+        this.sentDate = sentDate;
     }
 
     public Long getReceiverId() {

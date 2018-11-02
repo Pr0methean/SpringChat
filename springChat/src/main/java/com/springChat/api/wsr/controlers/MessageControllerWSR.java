@@ -13,6 +13,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Component
@@ -42,10 +43,11 @@ public class MessageControllerWSR implements InitializingBean {
                 message.setIdSender(session.getId());
                 message.setSentDate(Instant.now());
 
+
+                data.setSentDate(Timestamp.from(message.getSentDate()));
+
                 messageRepository.saveMessage(message);
                 session.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,data);
-
-
                 try{
                     Session<RemoteProcedure, Long> receiverSession = wsr.findSession(data.getReceiverId());
                     receiverSession.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,data);
