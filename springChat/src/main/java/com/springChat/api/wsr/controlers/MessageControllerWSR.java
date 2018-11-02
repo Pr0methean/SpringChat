@@ -43,6 +43,7 @@ public class MessageControllerWSR implements InitializingBean {
                 message.setSentDate(Instant.now());
 
                 messageRepository.saveMessage(message);
+                session.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,data);
 
 
                 try{
