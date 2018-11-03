@@ -8,7 +8,7 @@ open module chat {
     requires spring.beans;
     requires spring.websocket;
     requires java.sql;
-    requires tomcat.embed.core;
+//    requires tomcat.embed.core;
     requires spring.jdbc;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
