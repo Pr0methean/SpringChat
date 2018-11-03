@@ -47,7 +47,7 @@ public class MessageControllerWSR implements InitializingBean {
                 data.setSentDate(Timestamp.from(message.getSentDate()));
 
                 messageRepository.saveMessage(message);
-                session.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,data);
+                session.executeRemoteProcedure(RemoteProcedure.ADDMYMESSAGE,MessageDTO.class,data);
                 try{
                     Session<RemoteProcedure, Long> receiverSession = wsr.findSession(data.getReceiverId());
                     receiverSession.executeRemoteProcedure(RemoteProcedure.ADDMESSAGE,MessageDTO.class,data);
