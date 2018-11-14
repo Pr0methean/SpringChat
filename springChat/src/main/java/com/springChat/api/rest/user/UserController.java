@@ -69,7 +69,6 @@ public class UserController {
         }
         return new ResponseEntity<>( httpHeaders, HttpStatus.CONFLICT);
     }
-
     @CrossOrigin
     @PostMapping("/users/login")
     public ResponseEntity<UserRestDTO> getUserByNickAndPass(HttpServletRequest request, @RequestBody NewUser newUser){

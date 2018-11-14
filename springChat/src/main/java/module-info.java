@@ -20,6 +20,7 @@ open module chat {
     requires userRepository;
     requires spring.hateoas;
     requires messageRepository;
+    requires tomcat.embed.core;
 
     //exports
 }
