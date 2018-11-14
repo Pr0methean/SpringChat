@@ -8,6 +8,8 @@ import com.springChat.domain.model.ServerLog;
 import com.springChat.domain.model.User;
 import com.springChat.domain.ports.UserReposytory;
 import com.springChat.infrastructure.DbLogger;
+import com.userRepository.applications.exceptions.RepositorySQLException;
+import com.userRepository.applications.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
@@ -67,7 +69,28 @@ public class UserController {
         }
         return new ResponseEntity<>( httpHeaders, HttpStatus.CONFLICT);
     }
+    @CrossOrigin
+    @PostMapping("/users/login")
+    public ResponseEntity<UserRestDTO> getUserByNickAndPass(HttpServletRequest request, @RequestBody NewUser newUser){
 
+        HttpHeaders httpHeaders = this.getHeaders();
+
+        try {
+            User user = userReposytory.fetchUserBy(newUser.getNick(), newUser.getPassword());
+
+            UserRestDTO userRestDTO = userMapper.meptoUesrRestDTO(user);
+
+            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
+            return new ResponseEntity<>(userRestDTO, httpHeaders, HttpStatus.OK);
+
+        } catch (UserNotExistException e) {
+            e.printStackTrace();
+        } catch (RepositorySQLException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(httpHeaders, HttpStatus.UNAUTHORIZED);
+
+    }
 
     @GetMapping("/users")
     public ResponseEntity<List<UserRestDTO>> getUsers(HttpServletRequest request) {
