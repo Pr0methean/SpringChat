@@ -48,32 +48,11 @@ public class UserController {
         return httpHeaders;
     }
 
-
-    // TODO: 13.11.2018 HAVE TO REMOVE !!! 
-    @GetMapping("/users/login/{nick},{pass}")
-    public ResponseEntity<UserRestDTO> getUserByNickPass(HttpServletRequest request,
-                                     @PathVariable("nick") String userNick, @PathVariable("pass") String userPass){
-
-        HttpHeaders httpHeaders = this.getHeaders();
-        try {
-            UserRestDTO userDTO = this.userMapper.meptoUesrRestDTO(userReposytory.fetchUserBy(userNick,userPass));
-            //userDTO.addLik(new Link("self", "users/" + userDTO.getId()));
-
-            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
-            return new ResponseEntity<>(userDTO, httpHeaders, HttpStatus.OK);
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            httpHeaders.set("Error-message", e.getMessage());
-            dbLogger.log(new ServerLog(Instant.now(), request.getMethod(), request.getRequestURL().toString(), 409));
-        }
-        return new ResponseEntity<>( httpHeaders, HttpStatus.CONFLICT);
-    }
     @CrossOrigin
     @PostMapping("/users/login")
     public ResponseEntity<UserRestDTO> getUserByNickAndPass(HttpServletRequest request, @RequestBody NewUser newUser){
 
-        HttpHeaders httpHeaders = this.getHeaders();
+//        HttpHeaders httpHeaders = this.getHeaders();
 
         try {
             User user = userReposytory.fetchUserBy(newUser.getNick(), newUser.getPassword());
@@ -81,14 +60,14 @@ public class UserController {
             UserRestDTO userRestDTO = userMapper.meptoUesrRestDTO(user);
 
             dbLogger.log(new ServerLog(Instant.now(), request.getMethod(),request.getRequestURL().toString(),201));
-            return new ResponseEntity<>(userRestDTO, httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(userRestDTO, HttpStatus.OK);
 
         } catch (UserNotExistException e) {
             e.printStackTrace();
         } catch (RepositorySQLException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(httpHeaders, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
 
